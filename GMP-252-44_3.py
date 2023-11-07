@@ -48,6 +48,6 @@ try:
                 now = get_datetime()
                 print(f"Error reading CO2Sensor_44 at {now[1]} on {now[0]}: {e}")
 
-    except KeyboardInterrupt:
-        carbo_44.serial.close()
-        print("Ports Now Closed")
+except KeyboardInterrupt:
+    carbo_44.serial.close()
+    print("Ports Now Closed")
