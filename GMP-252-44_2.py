@@ -3,8 +3,9 @@ from time import sleep
 import csv
 from datetime import datetime
 
-# Define the file name for the CSV file
-csv_filename = "sensor_readings.csv"
+# Generate a unique filename with a timestamp
+timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+csv_filename = f"sensor_readings_{timestamp}.csv"
 
 carbo_44 = minimalmodbus.Instrument('/dev/ttyACM0', 44, debug=False)
 carbo_44.serial.baudrate = 19200
