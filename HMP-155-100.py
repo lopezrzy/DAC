@@ -22,6 +22,7 @@ try:
     while True:
         THUM_240.write("R")
         data = THUM_240.readline()
+        print(data)
     
         # Assuming the response format is "RH= 54.4 %RH Ta= 26.8 'C"
         parts = data.split()
