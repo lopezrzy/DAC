@@ -11,7 +11,7 @@ THUM_240 = serial.Serial("/dev/ttyACM0",
                    stopbits=serial.STOPBITS_ONE,
                    xonxoff=False,
                    timeout=1)
-THUM_240 = io.TextIOWrapper(io.BufferedRWPair(THUM_240, THUM_240))
+#THUM_240 = io.TextIOWrapper(io.BufferedRWPair(THUM_240, THUM_240))
 
 # Open the CSV file for writing
 csv_file = open('sensor_data.csv', mode='w', newline='')
