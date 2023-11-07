@@ -4,9 +4,6 @@ import csv
 import datetime
 import sys
 
-# Generate a unique filename with a timestamp
-timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-csv_filename = f"sensor_readings_{timestamp}.csv"
 
 carbo_44 = minimalmodbus.Instrument('/dev/ttyACM0', 44, debug=False)
 carbo_44.serial.baudrate = 19200
@@ -24,6 +21,10 @@ carbo_44.close_port_after_each_call = True
 def get_datetime():
     now = datetime.datetime.now()
     return now.strftime("%m/%d/%Y"), now.strftime("%H:%M")
+
+# Generate a unique filename with a timestamp
+timestamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
+csv_filename = f"sensor_readings_{timestamp}.csv"
 
 try:
     with open(csv_filename, mode='w', newline='') as csv_file:
