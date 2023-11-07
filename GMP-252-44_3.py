@@ -41,7 +41,7 @@ try:
                 # Read data from CO2Sensor_44
                 carbon_conc = carbo_44.read_float(1, 3, 2, 0)
                 print(f"{time}, {carbon_conc}")
-                sleep(30)
+                sleep(10)
                 writer.writerow({'Date': date, 'Time': time, 'C_CO2': carbon_conc})
 
             except Exception as e:
