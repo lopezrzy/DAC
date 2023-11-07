@@ -1,7 +1,7 @@
 import minimalmodbus
 from time import sleep
 import csv
-from datetime import datetime
+import datetime
 import sys
 
 # Generate a unique filename with a timestamp
