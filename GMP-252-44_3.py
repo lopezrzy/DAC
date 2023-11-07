@@ -19,28 +19,35 @@ carbo_44.mode = minimalmodbus.MODE_RTU
 carbo_44.clear_buffers_before_each_transaction = True
 carbo_44.close_port_after_each_call = True
 
-# Open the CSV file in write mode and create a CSV writer
-with open(csv_filename, mode='w', newline='') as csv_file:
-    fieldnames = ["Timestamp", "CO2 Concentration (ppm)"]
-    writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-    writer.writeheader()
+# Define a function to get the current date and time in the required format
 
-    try:
+def get_datetime():
+    now = datetime.datetime.now()
+    return now.strftime("%m/%d/%Y"), now.strftime("%H:%M")
+
+try:
+    with open(csv_filename, mode='w', newline='') as csv_file:
+        fieldnames = ['Date',
+                       'Time',
+                       'Ambient temperature',
+                       'Relative humidity',
+                       'C_CO2']
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        writer.writeheader()
+
         while True:
-            carbon_conc = carbo_44.read_float(1, 3, 2, 0)
+            date, time = get_datetime()
 
-            # Get the current timestamp
-            current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            try:
+                # Read data from CO2Sensor_44
+                carbon_conc = carbo_44.read_float(1, 3, 2, 0)
+                sleep(30)
+                writer.writerow({'Date': date, 'Time': time, 'C_CO2': carbon_conc})
 
-            # Write the readings to the CSV file
-            writer.writerow({"Timestamp": current_time, "CO2 Concentration (ppm)": carbon_conc})
-            csv_file.flush()
-
-            sleep(60)  # Sleep for 60 seconds (1 minute)
+            except Exception as e:
+                now = get_datetime()
+                print(f"Error reading CO2Sensor_44 at {now[1]} on {now[0]}: {e}")
 
     except KeyboardInterrupt:
         carbo_44.serial.close()
         print("Ports Now Closed")
-
-# Redirect stdout to /dev/null to suppress console output
-sys.stdout = open('/dev/null', 'w')
