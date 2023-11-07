@@ -45,7 +45,7 @@ try:
             print(f"Invalid response format at {date} {current_time}")
 
         # Wait for 60 seconds (1 minute)
-        time.sleep(60)
+        time.sleep(5)
 
 except KeyboardInterrupt:
     # Clean up when interrupted
