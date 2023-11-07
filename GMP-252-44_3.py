@@ -30,8 +30,6 @@ try:
     with open(csv_filename, mode='w', newline='') as csv_file:
         fieldnames = ['Date',
                        'Time',
-                       'Ambient temperature',
-                       'Relative humidity',
                        'C_CO2']
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
         writer.writeheader()
