@@ -11,7 +11,7 @@ THUM_34 = serial.Serial("/dev/ttyACM0",
                    xonxoff=False,
                    timeout=2)
 
-HUM_34 = io.TextIOWrapper(io.BufferedRWPair(THUM_34, THUM_34), encoding='ascii')
+HUM_34 = io.TextIOWrapper(io.BufferedRWPair(THUM_34, THUM_34,1), encoding='ascii')
 
 try:
     while True:
@@ -23,7 +23,7 @@ try:
         print("send")
         HUM_34.flush()
         sleep(1)
-        data = HUM_34.readline()
+        data = HUM_34.readline()[:-1]
         print(f"data is: {data}")
         HUM_34.flush()
         sleep(1)
