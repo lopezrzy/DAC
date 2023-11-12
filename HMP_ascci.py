@@ -19,7 +19,7 @@ try:
         print("open")
         HUM_34.flush()
         sleep(1)
-        HUM_34.write("send")
+        HUM_34.write("send 1\n")
         print("send")
         HUM_34.flush()
         sleep(1)
