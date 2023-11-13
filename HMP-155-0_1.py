@@ -55,6 +55,7 @@ for sensor_number in sensor_numbers:
     thread = threading.Thread(target=read_sensor, args=(port, sensor_number))
     threads.append(thread)
     thread.start()
+    sleep(5)
 
 # Wait for all threads to complete
 for thread in threads:
