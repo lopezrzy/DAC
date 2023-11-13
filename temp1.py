@@ -26,7 +26,9 @@ def get_readings(sensor_number, hum_sensor):
             print(f"Sensor {sensor_number}: send")
             hum_sensor.flush()
             sleep(1)
-            data = hum_sensor.readline()
+            data = hum_sensor.read(100)
+
+            #data = hum_sensor.readline()
             dataInString=str(data)
             print(f"Sensor {sensor_number}: data is {dataInString}")
             hum_sensor.flush()
