@@ -36,7 +36,8 @@ def initialize_sensor(port, sensor_number):
         print(f"Sensor {sensor_number} Port Closed")
 
 # List of sensor numbers in the desired order
-sensor_numbers = [31, 32, 33, 34]
+#sensor_numbers = [31, 32, 33, 34]
+sensor_numbers = [0]
 
 # Serial port for all sensors
 port = "/dev/ttyACM0"
