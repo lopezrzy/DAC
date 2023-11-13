@@ -9,14 +9,14 @@ def initialize_sensor(port, sensor_number):
                                   parity=serial.PARITY_EVEN,
                                   stopbits=serial.STOPBITS_ONE,
                                   xonxoff=False,
-                                  timeout=20)
+                                  timeout=2)
     hum_sensor = io.TextIOWrapper(io.BufferedRWPair(serial_sensor, serial_sensor))
 
     try:
         while True:
             hum_sensor.write("R\r\n")  # Start continuous output
             hum_sensor.flush()
-            print(f"Sensor {sensor_number}: started continuous output")
+            #print(f"Sensor {sensor_number}: started continuous output")
             sleep(2)  # Allow time for the sensor to start continuous output
 
             hum_sensor.write("SEND\r\n")  # Request a reading
