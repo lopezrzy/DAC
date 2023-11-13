@@ -10,7 +10,7 @@ def read_sensor(port, sensor_number):
                                   parity=serial.PARITY_EVEN,
                                   stopbits=serial.STOPBITS_ONE,
                                   xonxoff=False,
-                                  timeout=20)
+                                  timeout=2)
     hum_sensor = io.TextIOWrapper(io.BufferedRWPair(serial_sensor, serial_sensor))
 
     try:
