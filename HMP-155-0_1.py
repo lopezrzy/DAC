@@ -17,7 +17,7 @@ def read_sensor(port, sensor_number):
         hum_sensor.write(f"open {sensor_number}\r\n")  # Open a connection to the sensor
         hum_sensor.flush()
         print(f"Sensor {sensor_number}: opened connection")
-        sleep(2)  # Allow time for the sensor to initialize
+        sleep(5)  # Allow time for the sensor to initialize
 
         hum_sensor.write("R\r\n")  # Start continuous output
         hum_sensor.flush()
@@ -27,7 +27,7 @@ def read_sensor(port, sensor_number):
         while True:
             hum_sensor.write("SEND\r\n")  # Request a reading
             hum_sensor.flush()
-            data = hum_sensor.readline().strip()
+            data = hum_sensor.readline()
             print(f"Sensor {sensor_number}: data is {data}")
 
             # Optional: Stop continuous output if needed
