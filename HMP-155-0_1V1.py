@@ -62,7 +62,7 @@ for sensor_number in sensor_numbers:
     thread.start()
     
     # Introduce a small delay before starting the next thread
-    sleep(1)  # Adjust the delay time as needed
+    sleep(5)  # Adjust the delay time as needed
 
 # Wait for all threads to complete
 for thread in threads:
