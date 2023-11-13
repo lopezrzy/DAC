@@ -11,6 +11,7 @@ def initialize_sensor(port, sensor_number):
                                   xonxoff=False,
                                   timeout=2)
 
+    print(serial_sensor.name)
     hum_sensor = io.TextIOWrapper(io.BufferedRWPair(serial_sensor, serial_sensor))
     return hum_sensor
 
