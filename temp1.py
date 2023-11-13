@@ -10,15 +10,13 @@ def initialize_sensor(port, sensor_number):
                                   stopbits=serial.STOPBITS_ONE,
                                   xonxoff=False,
                                   timeout=2)
-
-    print(serial_sensor.name)
     hum_sensor = io.TextIOWrapper(io.BufferedRWPair(serial_sensor, serial_sensor))
     return hum_sensor
 
 def get_readings(sensor_number, hum_sensor):
     try:
         while True:
-            hum_sensor.write(f"open {sensor_number}")
+            hum_sensor.write(unicode(f"open {sensor_number}"))
             print(f"Sensor {sensor_number}: open")
             hum_sensor.flush()
             sleep(1)
@@ -26,9 +24,9 @@ def get_readings(sensor_number, hum_sensor):
             print(f"Sensor {sensor_number}: send")
             hum_sensor.flush()
             sleep(1)
-            data = hum_sensor.read(100)
+            #data = hum_sensor.read(100)
 
-            #data = hum_sensor.readline()
+            data = hum_sensor.readline()
             dataInString=str(data)
             print(f"Sensor {sensor_number}: data is {dataInString}")
             hum_sensor.flush()
