@@ -11,9 +11,7 @@ def initialize_sensor(port, sensor_number):
                                   xonxoff=False,
                                   timeout=4)
     hum_sensor = io.TextIOWrapper(io.BufferedRWPair(serial_sensor, serial_sensor))
-    return hum_sensor
 
-def get_readings(sensor_number, hum_sensor):
     try:
         while True:
             hum_sensor.write(f"open {sensor_number}\r\n")
@@ -24,7 +22,7 @@ def get_readings(sensor_number, hum_sensor):
             print(f"Sensor {sensor_number}: send")
             hum_sensor.flush()
             sleep(1)
-            data = hum_sensor.readline()
+            data = hum_sensor.readline().strip()
             #dataInString=str(data)
             print(f"Sensor {sensor_number}: data is {data}")
             hum_sensor.flush()
@@ -46,5 +44,4 @@ port = "/dev/ttyACM0"
 
 # Loop through the sensors
 for sensor_number in sensor_numbers:
-    sensor=initialize_sensor(port, sensor_number)
-    get_readings(sensor_number,sensor)
+    initialize_sensor(port, sensor_number)
