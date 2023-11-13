@@ -32,6 +32,8 @@ def initialize_sensor(port, sensor_number):
 
     except KeyboardInterrupt:
         # Clean up when interrupted
+        hum_sensor.write("S\r\n")
+        hum_sensor.flush()
         print(f"Sensor {sensor_number} Port Closed")
 
 # List of sensor numbers in the desired order
