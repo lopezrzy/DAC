@@ -26,7 +26,8 @@ def get_readings(sensor_number, hum_sensor):
             hum_sensor.flush()
             sleep(1)
             data = hum_sensor.readline()
-            print(f"Sensor {sensor_number}: data is {data}")
+            dataInString=str(data)
+            print(f"Sensor {sensor_number}: data is {dataInString}")
             hum_sensor.flush()
             sleep(1)
             hum_sensor.write("close")
@@ -38,8 +39,8 @@ def get_readings(sensor_number, hum_sensor):
         print(f"Sensor {sensor_number} Port Closed")
 
 # List of sensor numbers in the desired order
-sensor_numbers = [31, 32, 33, 34]
-#sensor_numbers = [0]
+#sensor_numbers = [31, 32, 33, 34]
+sensor_numbers = [0]
 
 # Serial port for all sensors
 port = "/dev/ttyACM0"
