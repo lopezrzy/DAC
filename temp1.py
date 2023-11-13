@@ -16,11 +16,11 @@ def initialize_sensor(port, sensor_number):
 def get_readings(sensor_number, hum_sensor):
     try:
         while True:
-            hum_sensor.write(f"open {sensor_number}")
+            hum_sensor.write(f"open {sensor_number}\r\n")
             print(f"Sensor {sensor_number}: open")
             hum_sensor.flush()
             sleep(1)
-            hum_sensor.write("send")
+            hum_sensor.write("send\r\n")
             print(f"Sensor {sensor_number}: send")
             hum_sensor.flush()
             sleep(1)
@@ -29,7 +29,7 @@ def get_readings(sensor_number, hum_sensor):
             print(f"Sensor {sensor_number}: data is {data}")
             hum_sensor.flush()
             sleep(1)
-            hum_sensor.write("close")
+            hum_sensor.write("close\r\n")
             print(f"Sensor {sensor_number}: close")
             sleep(2)
 
