@@ -17,17 +17,17 @@ def parse_data(data):
     current_time = time.strftime("%Y-%m-%d %H:%M:%S")
     humidity = -1
     temperature = -1 
-    print(type(data))
     if re.match(r'^[RH= Ta.0-9\'C % ]+$', data):
         # Count the occurrences of "Ta="
         ta_count = data.count("Ta=")
-
+        print(ta_count)
         # Check if "Ta=" appears exactly once
         if ta_count == 1:
             # Use regular expressions to extract numeric values for RH and Ta
             rh_match = re.search(r'RH=([\d.]+)', data)
             ta_match = re.search(r'Ta=([\d.]+)', data)
-            
+            print(rh_match)
+            print(ta_match)
             # Check if both matches are found
             if rh_match and ta_match:
                 humidity = float(rh_match.group(1))
