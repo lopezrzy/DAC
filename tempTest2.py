@@ -15,7 +15,7 @@ def initialize_sensor(port, sensor_number):
     try:
         while True:
             # Check the current SMODE
-            hum_sensor.write("smode\r\n")
+            hum_sensor.write("smode RUN\r\n")
             hum_sensor.flush()
             smode_response = hum_sensor.readline().strip()
             print(f"Sensor {sensor_number}: SMODE is {smode_response}")
