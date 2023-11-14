@@ -15,6 +15,8 @@ def read_sensor(port, sensor_number):
     hum_sensor = io.TextIOWrapper(io.BufferedRWPair(serial_sensor, serial_sensor))
 
     try:
+        mode=  hum_sensor.write("SMODE\r\n")
+        print(f"Smode {sensor_number}: {mode}")
         hum_sensor.write(f"open {sensor_number}\r\n")  # Open a connection to the sensor
         hum_sensor.flush()
         print(f"Sensor {sensor_number}: opened connection")
@@ -24,7 +26,7 @@ def read_sensor(port, sensor_number):
         hum_sensor.flush()
         print(f"Sensor {sensor_number}: started continuous output")
         sleep(2)  # Allow time for the sensor to start continuous output
-
+        
         while True:
             hum_sensor.write("SEND\r\n")  # Request a reading
             hum_sensor.flush()
