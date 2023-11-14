@@ -24,8 +24,8 @@ def parse_data(data):
         # Check if "Ta=" appears exactly once
         if ta_count == 1:
             # Use regular expressions to extract numeric values for RH and Ta
-            rh_match = re.search(r'RH=([\d.]+)', data)
-            ta_match = re.search(r'Ta=([\d.]+)', data)
+            rh_match = re.search(r'RH= ([\d.]+)', data)
+            ta_match = re.search(r'Ta= ([\d.]+)', data)
             print(rh_match)
             print(ta_match)
             # Check if both matches are found
