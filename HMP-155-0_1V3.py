@@ -22,18 +22,15 @@ def parse_data(data):
     current_time = time.strftime("%Y-%m-%d %H:%M:%S")
     humidity = None
     temperature = None 
+    #Check if only the characters in [] exist in the string
     if re.match(r'^[RH= Ta.0-9\'C % ]+$', data):
-        # Count the occurrences of "Ta="
-        ta_count = data.count("Ta=")
-        # Check if "Ta=" appears exactly once
-        if ta_count == 1:
-            # Use regular expressions to extract numeric values for RH and Ta
-            rh_match = re.search(r'RH= ([\d.]+)', data)
-            ta_match = re.search(r'Ta= ([\d.]+)', data)
-            # Check if both matches are found
-            if rh_match and ta_match:
-                humidity = float(rh_match.group(1))
-                temperature = float(ta_match.group(1))
+        # Use regular expressions to extract numeric values for RH and Ta
+        rh_match = re.search(r'RH= ([\d.]+)', data)
+        ta_match = re.search(r'Ta= ([\d.]+)', data)
+        # Check if both matches are found
+        if rh_match and ta_match:
+            humidity = float(rh_match.group(1))
+            temperature = float(ta_match.group(1))
                 
     return humidity, temperature, current_time 
         
