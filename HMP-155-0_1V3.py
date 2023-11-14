@@ -15,6 +15,9 @@ def open_device(serial_wrapper, device_number):
 def parse_data(data):
     # Check if the input contains only 'R', 'H', 'T', 'a', and allowed special characters
     current_time = time.strftime("%Y-%m-%d %H:%M:%S")
+    humidity = -1
+    temperature = -1 
+    print(type(data))
     if re.match(r'^[RH= Ta.0-9\'C %]+$', data):
         # Count the occurrences of "Ta="
         ta_count = data.count("Ta=")
@@ -29,8 +32,8 @@ def parse_data(data):
             if rh_match and ta_match:
                 humidity = float(rh_match.group(1))
                 temperature = float(ta_match.group(1))
-                return humidity, temperature, current_time
-    return -1, -1, current_time 
+                
+    return humidity, temperature, current_time 
         
         
 def read_device(serial_wrapper, device_number,csv_writer):
