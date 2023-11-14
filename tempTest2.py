@@ -32,12 +32,11 @@ def initialize_sensor(port, sensor_number):
         # Clean up when interrupted
         hum_sensor.write("close\r\n")
         print(f"Sensor {sensor_number}: close")
-        sleep(5)
         print(f"Sensor {sensor_number} Port Closed")
         serial_sensor.close()
 
 # List of sensor numbers in the desired order
-sensor_numbers = [0]
+sensor_numbers = [0,1]
 
 # Serial port for all sensors
 port = "/dev/ttyACM0"
