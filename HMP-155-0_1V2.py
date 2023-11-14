@@ -1,3 +1,4 @@
+# nov 13 version of HMP-155-0_1V1.py
 import serial
 import io
 import threading
