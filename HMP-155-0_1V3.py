@@ -17,12 +17,11 @@ def read_device(serial_wrapper, device_number):
         sleep(10)
 
         # Read and print the data
-        data = serial_wrapper.readlines()
+        data = serial_wrapper.readline().strip()
         print(f"Data from Device {device_number}: {data}")
         sleep(3)
 
     except KeyboardInterrupt:
-        # Handle Ctrl+C gracefully
         print(f"Ctrl+C received. Closing Device {device_number}")
     finally:
         # Close the device
