@@ -36,13 +36,13 @@ def read_device(serial_wrapper, device_number, csv_writer):
             print(f"Data written to CSV for Device {device_number}")
 
         time.sleep(3)
-
     except KeyboardInterrupt:
         # Clean up when interrupted
-        serial_wrapper.close()
-        #serial_wrapper.write("close\r\n")
-        print(f"Sensor {device_number}: close")
-        
+        print("Ports Now Closed")
+    finally:
+        # Close all open ports
+        for serial_device in serial_devices:
+            serial_device.close() 
 
 # Define device numbers for two devices (0 and 1)
 device_numbers = ["0", "1"]
