@@ -25,7 +25,6 @@ def parse_data(data):
     if re.match(r'^[RH= Ta.0-9\'C % ]+$', data):
         # Count the occurrences of "Ta="
         ta_count = data.count("Ta=")
-        print(ta_count)
         # Check if "Ta=" appears exactly once
         if ta_count == 1:
             # Use regular expressions to extract numeric values for RH and Ta
