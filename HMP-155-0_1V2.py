@@ -49,7 +49,7 @@ def read_sensor(port, sensor_number):
         serial_sensor.close()
 
 # List of sensor numbers in the desired order
-sensor_numbers = [0]
+sensor_numbers = [0, 1]
 
 # Serial port for all sensors
 port = "/dev/ttyACM0"
