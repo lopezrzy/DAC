@@ -40,7 +40,7 @@ serial_THUM_0 = serial.Serial("/dev/ttyACM0",
                                stopbits=serial.STOPBITS_ONE,
                                xonxoff=False,
                                timeout=2)
-THUM_33 = io.TextIOWrapper(io.BufferedRWPair(serial_THUM_0, serial_THUM_0))
+THUM_0 = io.TextIOWrapper(io.BufferedRWPair(serial_THUM_0, serial_THUM_0))
 
 
 try:
