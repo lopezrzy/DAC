@@ -40,10 +40,10 @@ def read_device(serial_wrapper, device_number,csv_writer):
         print(f"Data written to CSV for Device {device_number}")
         sleep(3)
 
-    except KeyboardInterrupt:
+    #except KeyboardInterrupt:
         # Clean up when interrupted
         #serial_wrapper.write("close\r\n")
-        print(f"Sensor {device_number}: close")
+     #   print(f"Sensor {device_number}: close")
         #print(f"Sensor {sensor_number} Port Closed")
         #serial_wrapper.close()
 
