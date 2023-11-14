@@ -39,8 +39,10 @@ def read_device(serial_wrapper, device_number, csv_writer):
 
     except KeyboardInterrupt:
         # Clean up when interrupted
-        serial_wrapper.write("close\r\n")
+        serial_wrapper.close()
+        #serial_wrapper.write("close\r\n")
         print(f"Sensor {device_number}: close")
+        
 
 # Define device numbers for two devices (0 and 1)
 device_numbers = ["0", "1"]
