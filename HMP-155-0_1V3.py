@@ -5,6 +5,10 @@ from time import sleep
 import time
 import re
 
+def get_datetime():
+    now = datetime.datetime.now()
+    return now.strftime("%m/%d/%Y"), now.strftime("%H:%M")
+
 def open_device(serial_wrapper, device_number):
     # Open the device
     serial_wrapper.write(f"OPEN {device_number}\r\n")
@@ -26,8 +30,6 @@ def parse_data(data):
             # Use regular expressions to extract numeric values for RH and Ta
             rh_match = re.search(r'RH= ([\d.]+)', data)
             ta_match = re.search(r'Ta= ([\d.]+)', data)
-            print(rh_match)
-            print(ta_match)
             # Check if both matches are found
             if rh_match and ta_match:
                 humidity = float(rh_match.group(1))
@@ -40,7 +42,6 @@ def read_device(serial_wrapper, device_number,csv_writer):
     # Send the data request
     serial_wrapper.write("SEND\r\n")
     serial_wrapper.flush()
-    print("Send")
     sleep(5)
     # Read and print the data
     data = serial_wrapper.readline().strip()
@@ -49,15 +50,7 @@ def read_device(serial_wrapper, device_number,csv_writer):
     humidity, temperature, current_time= parse_data(data)
     # Write data to the CSV file
     csv_writer.writerow([current_time, temperature, humidity, device_number])
-    print(f"Data written to CSV for Device {device_number}")
-    sleep(3)
-
-    #except KeyboardInterrupt:
-        # Clean up when interrupted
-        #serial_wrapper.write("close\r\n")
-     #   print(f"Sensor {device_number}: close")
-        #print(f"Sensor {sensor_number} Port Closed")
-        #serial_wrapper.close()
+    sleep(8)
 
 # Define device numbers for only two devices (0 and 1)
 device_numbers = ["0", "1"]
@@ -74,8 +67,12 @@ serial_devices = [serial.Serial("/dev/ttyACM0",
 # TextIOWrapper objects for the two devices
 THUM_devices = [io.TextIOWrapper(io.BufferedRWPair(serial_device, serial_device)) for serial_device in serial_devices]
 
+# Generate a unique filename with a timestamp
+timestamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
+csv_filename = f"Temperature_RH_{timestamp}.csv"
+
 # Create and open a CSV file for data storage
-with open("sensor_data.csv", mode="w", newline="") as csv_file:
+with open(csv_filename, mode="w", newline="") as csv_file:
     csv_writer = csv.writer(csv_file)
     
     # Write headers to the CSV file
