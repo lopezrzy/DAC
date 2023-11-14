@@ -57,12 +57,11 @@ port = "/dev/ttyACM0"
 # Create threads for each sensor
 threads = []
 for sensor_number in sensor_numbers:
-    #thread = threading.Thread(target=read_sensor, args=(port, sensor_number))
-    #threads.append(thread)
-    #thread.start()
-    read_sensor(port, sensor_number)
+    thread = threading.Thread(target=read_sensor, args=(port, sensor_number))
+    threads.append(thread)
+    thread.start()
     # Introduce a small delay before starting the next thread
-    sleep(5)  # Adjust the delay time as needed
+    sleep(2)  # Adjust the delay time as needed
 
 # Wait for all threads to complete
 for thread in threads:
