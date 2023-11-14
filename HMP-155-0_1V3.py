@@ -20,8 +20,8 @@ def open_device(serial_wrapper, device_number):
 def parse_data(data):
     # Check if the input contains only 'R', 'H', 'T', 'a', and allowed special characters
     current_time = time.strftime("%Y-%m-%d %H:%M:%S")
-    humidity = -1
-    temperature = -1 
+    humidity = None
+    temperature = None 
     if re.match(r'^[RH= Ta.0-9\'C % ]+$', data):
         # Count the occurrences of "Ta="
         ta_count = data.count("Ta=")
