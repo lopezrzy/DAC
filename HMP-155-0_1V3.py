@@ -13,15 +13,16 @@ def open_device(serial_wrapper, device_number):
 
 def parse_data(data):
     # Parse the data
+    humidity = -1
+    temperature = -1
     if data.startswith("RH=") and "T=" in data:
         humidity, temperature = data.split("T=")
         humidity = float(humidity.strip().replace("RH=", "").replace("%", ""))
         temperature = float(temperature.strip().replace("'C", ""))
-        current_time = time.strftime("%Y-%m-%d %H:%M:%S")       
+    current_time = time.strftime("%Y-%m-%d %H:%M:%S")    
     return humidity, temperature, current_time
         
         
-
 def read_device(serial_wrapper, device_number,csv_writer):
     try:
         # Send the data request
