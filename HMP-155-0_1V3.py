@@ -17,7 +17,7 @@ def parse_data(data):
     temperature = -1
     if data.startswith("RH=") and "Ta=" in data:
         humidity, temperature = data.split("Ta=")
-        humidity = float(humidity.strip().replace("RH=", "").replace("%", ""))
+        humidity = float(humidity.strip().replace("RH=", "").replace("%RH", ""))
         temperature = float(temperature.strip().replace("'C", ""))
     current_time = time.strftime("%Y-%m-%d %H:%M:%S")    
     return humidity, temperature, current_time
