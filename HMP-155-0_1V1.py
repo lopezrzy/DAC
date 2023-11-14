@@ -15,8 +15,6 @@ def read_sensor(port, sensor_number):
     hum_sensor = io.TextIOWrapper(io.BufferedRWPair(serial_sensor, serial_sensor))
 
     try:
-        mode=  hum_sensor.write("SMODE\r\n")
-        print(f"Smode {sensor_number}: {mode}")
         hum_sensor.write(f"open {sensor_number}\r\n")  # Open a connection to the sensor
         hum_sensor.flush()
         print(f"Sensor {sensor_number}: opened connection")
@@ -59,12 +57,12 @@ port = "/dev/ttyACM0"
 # Create threads for each sensor
 threads = []
 for sensor_number in sensor_numbers:
-    thread = threading.Thread(target=read_sensor, args=(port, sensor_number))
-    threads.append(thread)
-    thread.start()
-    
+    #thread = threading.Thread(target=read_sensor, args=(port, sensor_number))
+    #threads.append(thread)
+    #thread.start()
+    read_sensor(port, sensor_number)
     # Introduce a small delay before starting the next thread
-    sleep(10)  # Adjust the delay time as needed
+    sleep(5)  # Adjust the delay time as needed
 
 # Wait for all threads to complete
 for thread in threads:
