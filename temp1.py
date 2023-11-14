@@ -9,7 +9,7 @@ def initialize_sensor(port, sensor_number):
                                   parity=serial.PARITY_EVEN,
                                   stopbits=serial.STOPBITS_ONE,
                                   xonxoff=False,
-                                  timeout=20)
+                                  timeout=5)
     hum_sensor = io.TextIOWrapper(io.BufferedRWPair(serial_sensor, serial_sensor))
 
     try:
@@ -37,7 +37,6 @@ def initialize_sensor(port, sensor_number):
         print(f"Sensor {sensor_number} Port Closed")
 
 # List of sensor numbers in the desired order
-#sensor_numbers = [31, 32, 33, 34]
 sensor_numbers = [0]
 
 # Serial port for all sensors
