@@ -2,33 +2,31 @@ import serial
 import io
 from time import sleep
 
+def open_device(serial_wrapper, device_number):
+    # Open the device
+    serial_wrapper.write(f"OPEN {device_number}\r\n")
+    serial_wrapper.flush()
+    print(f"Device {device_number} is opened")
+    sleep(2)
+        
 def read_device(serial_wrapper, device_number):
     try:
-        # Open the device
-        serial_wrapper.write(f"OPEN {device_number}\r\n")
-        serial_wrapper.flush()
-        print(f"Device {device_number} is opened")
-        sleep(5)
-
         # Send the data request
         serial_wrapper.write("SEND\r\n")
         serial_wrapper.flush()
         print("Send")
-        sleep(10)
-
+        sleep(5)
         # Read and print the data
         data = serial_wrapper.readline().strip()
         print(f"Data from Device {device_number}: {data}")
         sleep(3)
 
     except KeyboardInterrupt:
-        print(f"Ctrl+C received. Closing Device {device_number}")
-    finally:
-        # Close the device
-        serial_wrapper.write("CLOSE\r\n")
-        serial_wrapper.flush()
-        print(f"Device {device_number} closed")
-        sleep(5)
+        # Clean up when interrupted
+        hum_sensor.write("close\r\n")
+        print(f"Sensor {sensor_number}: close")
+        print(f"Sensor {sensor_number} Port Closed")
+        serial_sensor.close()
 
 # Define device numbers for only two devices (0 and 1)
 device_numbers = ["0", "1"]
@@ -44,6 +42,9 @@ serial_devices = [serial.Serial("/dev/ttyACM0",
 
 # TextIOWrapper objects for the two devices
 THUM_devices = [io.TextIOWrapper(io.BufferedRWPair(serial_device, serial_device)) for serial_device in serial_devices]
+
+for i, device_number in enumerate(device_numbers):
+    open_device(THUM_devices[i], device_number)
 
 try:
     while True:
