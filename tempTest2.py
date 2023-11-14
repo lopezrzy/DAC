@@ -13,17 +13,14 @@ def initialize_sensor(port, sensor_number):
     hum_sensor = io.TextIOWrapper(io.BufferedRWPair(serial_sensor, serial_sensor))
 
     try:
+        hum_sensor.write(f"open {sensor_number}\r\n")
+        hum_sensor.flush()
+        print(f"Sensor {sensor_number}: open")
+        sleep(2)
+        hum_sensor.write("smode RUN\r\n")
+        hum_sensor.flush()
+        sleep(2)
         while True:
-            # Check the current SMODE
-            hum_sensor.write("smode RUN\r\n")
-            hum_sensor.flush()
-            smode_response = hum_sensor.readline().strip()
-            print(f"Sensor {sensor_number}: SMODE is {smode_response}")
-
-            hum_sensor.write(f"open {sensor_number}\r\n")
-            hum_sensor.flush()
-            print(f"Sensor {sensor_number}: open")
-            sleep(2)
             hum_sensor.write("send\r\n")
             hum_sensor.flush()
             print(f"Sensor {sensor_number}: send")
@@ -31,12 +28,11 @@ def initialize_sensor(port, sensor_number):
             data = hum_sensor.readline().strip()
             print(f"Sensor {sensor_number}: data is {data}")
             sleep(2)
-            hum_sensor.write("close\r\n")
-            print(f"Sensor {sensor_number}: close")
-            sleep(5)
-
     except KeyboardInterrupt:
         # Clean up when interrupted
+        hum_sensor.write("close\r\n")
+        print(f"Sensor {sensor_number}: close")
+        sleep(5)
         print(f"Sensor {sensor_number} Port Closed")
         serial_sensor.close()
 
