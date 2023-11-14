@@ -13,7 +13,7 @@ def read_device(serial_wrapper, device_number):
         
         serial_wrapper.write("R\r\n")  # Start continuous output
         serial_wrapper.flush()
-        print(f"Sensor {sensor_number}: started continuous output")
+        print(f"Sensor {device_number}: started continuous output")
         sleep(2)  # Allow time for the sensor to start continuous output
 
         # Send the data request
