@@ -3,6 +3,7 @@ import io
 import csv
 from time import sleep
 import time
+import re
 
 def open_device(serial_wrapper, device_number):
     # Open the device
