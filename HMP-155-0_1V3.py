@@ -18,7 +18,7 @@ def parse_data(data):
     humidity = -1
     temperature = -1 
     print(type(data))
-    if re.match(r'^[RH= Ta.0-9\'C %]+$', data):
+    if re.match(r'^[RH= Ta.0-9\'C % ]+$', data):
         # Count the occurrences of "Ta="
         ta_count = data.count("Ta=")
 
