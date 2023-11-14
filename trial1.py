@@ -11,8 +11,8 @@ def read_device(serial_wrapper, device_number):
         print(f"Device {device_number} is opened")
         sleep(5)
         
-        hum_sensor.write("R\r\n")  # Start continuous output
-        hum_sensor.flush()
+        serial_wrapper.write("R\r\n")  # Start continuous output
+        serial_wrapper.flush()
         print(f"Sensor {sensor_number}: started continuous output")
         sleep(2)  # Allow time for the sensor to start continuous output
 
