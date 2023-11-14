@@ -50,7 +50,7 @@ THUM_0 = io.TextIOWrapper(io.BufferedRWPair(serial_THUM_0, serial_THUM_0))
 
 try:
     # Read from Device 0
-    read_device(THUM_0, "0")
+    read_device(THUM_0, "1")
 
 
 except KeyboardInterrupt:
