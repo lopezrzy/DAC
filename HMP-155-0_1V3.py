@@ -24,21 +24,20 @@ def parse_data(data):
         
         
 def read_device(serial_wrapper, device_number,csv_writer):
-    try:
-        # Send the data request
-        serial_wrapper.write("SEND\r\n")
-        serial_wrapper.flush()
-        print("Send")
-        sleep(5)
-        # Read and print the data
-        data = serial_wrapper.readline().strip()
-        print(f"Data from Device {device_number}: {data}")
+    # Send the data request
+    serial_wrapper.write("SEND\r\n")
+    serial_wrapper.flush()
+    print("Send")
+    sleep(5)
+    # Read and print the data
+    data = serial_wrapper.readline().strip()
+    print(f"Data from Device {device_number}: {data}")
         
-        humidity, temperature, current_time= parse_data(data)
-        # Write data to the CSV file
-        csv_writer.writerow([current_time, temperature, humidity, device_number])
-        print(f"Data written to CSV for Device {device_number}")
-        sleep(3)
+    humidity, temperature, current_time= parse_data(data)
+    # Write data to the CSV file
+    csv_writer.writerow([current_time, temperature, humidity, device_number])
+    print(f"Data written to CSV for Device {device_number}")
+    sleep(3)
 
     #except KeyboardInterrupt:
         # Clean up when interrupted
