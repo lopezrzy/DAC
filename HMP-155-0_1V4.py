@@ -46,21 +46,8 @@ def read_device(serial_wrapper, device_number, csv_writer):
     humidity, temperature, current_time = parse_data(data)
     # Write data to the CSV file
     csv_writer.writerow([current_time, temperature, humidity, device_number])
+    csv_file.flush()  # Flush the buffer to ensure data is written immediately
     sleep(8)
-
-def save_csv_periodically(csv_writer):
-    current_minute = datetime.datetime.now().minute
-    while True:
-        if datetime.datetime.now().minute != current_minute:
-            # Create a new CSV file with a timestamp
-            timestamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
-            csv_filename = f"Temperature_RH_{timestamp}.csv"
-            with open(csv_filename, mode="w", newline="") as csv_file:
-                csv_writer = csv.writer(csv_file)
-                # Write headers to the CSV file
-                csv_writer.writerow(["Time", "Temperature (C)", "RH (%)", "Sensor Number"])
-            current_minute = datetime.datetime.now().minute
-        sleep(10)  # Check every 10 seconds
 
 # Define device numbers for only two devices (0 and 1)
 device_numbers = ["0", "1"]
@@ -92,12 +79,14 @@ with open(csv_filename, mode="w", newline="") as csv_file:
         open_device(THUM_devices[i], device_number)
     
     try:
-        # Start the periodic CSV saving process in a separate thread
-        import threading
-        save_csv_thread = threading.Thread(target=save_csv_periodically, args=(csv_writer,))
-        save_csv_thread.start()
-        
+        last_save_time = time.time()
         while True:
+            current_time = time.time()
+            # Check if a minute has elapsed since the last save
+            if current_time - last_save_time >= 60:
+                csv_file.flush()  # Flush the buffer to ensure data is written immediately
+                last_save_time = current_time
+            
             for i, device_number in enumerate(device_numbers):
                 read_device(THUM_devices[i], device_number, csv_writer)
     
