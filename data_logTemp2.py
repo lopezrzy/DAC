@@ -5,6 +5,7 @@ import csv
 import serial
 import io
 import os
+import sys  # Import sys module for KeyboardInterrupt handling
 
 
 # Configuration of HMP-155
