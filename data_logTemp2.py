@@ -45,13 +45,12 @@ try:
 
         # Write the header only if the file is empty
         if not file_exists:
-            writer.writeheader()
-
-
-
+          writer.writeheader()
+          print('writing header')
+          
         while True:
             date, time = get_datetime()
-            print(writing)
+            print('writing')
 
             try:
                 THUM_00.write("OPEN 0\r\n")
