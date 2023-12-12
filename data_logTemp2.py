@@ -8,7 +8,7 @@ import os
 
 
 # Configuration of HMP-155
-serial_THUM = serial.Serial("/dev/ttyACM1",
+serial_THUM = serial.Serial("/dev/ttyACM0",
                    baudrate=4800,
                    bytesize=serial.SEVENBITS,
                    parity=serial.PARITY_EVEN,
