@@ -10,7 +10,7 @@ import sys  # Import sys module for KeyboardInterrupt handling
 
 def parse_data(data):
     # Check if the input contains only 'R', 'H', 'T', 'a', and allowed special characters
-    current_time = get_datetime()
+    date, time_ = get_datetime()
     humidity = None
     temperature = None 
     # Check if only the characters in [] exist in the string
@@ -23,7 +23,7 @@ def parse_data(data):
             humidity = float(rh_match.group(1))
             temperature = float(ta_match.group(1))
                 
-    return humidity, temperature, current_time
+    return humidity, temperature, date, time_ 
   
 # Define a function to get the current date and time in the required format
 def get_datetime():
@@ -67,7 +67,6 @@ try:
           print('writing header')
           
         while True:
-            date, time_ = get_datetime()
             print('writing')
 
             try:
@@ -78,7 +77,7 @@ try:
                 THUM_00.flush()
                 sleep(1)
                 data_00 = THUM_00.readline().strip()
-                rh, temperature, current_time = parse_data(data_00)
+                rh, temperature, date, time_  = parse_data(data_00)
                 writer.writerow({'Date': date, 'Time': time_, 'IO': "Inlet", 'Temp': temperature, 'Humidity': rh})
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
                 sleep(5)
@@ -106,7 +105,7 @@ try:
                 THUM_01.flush()
                 sleep(1)
                 data_01 = THUM_01.readline().strip()
-                rh, temperature, current_time = parse_data(data_01)
+                rh, temperature, date, time_  = parse_data(data_01)
                 writer.writerow({'Date': date, 'Time': time_, 'IO': "Outlet", 'Temp': temperature, 'Humidity': rh})
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
                 sleep(5)
