@@ -66,8 +66,7 @@ try:
                     writer.writerow({'Date': date, 'Time': time, 'IO': "Inlet", 'Temp': temp_value_00, 'Humidity': rh_value_00})
                 print(f"RH from Device 00: {rh_value_00}")  
                 print(f"Temp from Device 00: {temp_value_00}")  
-          
-              sleep(1)
+                sleep(1)
                 THUM_00.write("CLOSE\r\n")
                 sleep(1)
             except Exception as e:
