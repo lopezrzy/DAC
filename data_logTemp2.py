@@ -94,10 +94,6 @@ try:
                 print(f"Error reading THUM_01 at {now[1]} on {now[0]}: {e}")
 
 except KeyboardInterrupt:
-    # Close serial ports only if they are open
-    if carbo_43.serial.is_open:
-        carbo_43.serial.close()
-    if carbo_43.serial.is_open:
-        carbo_43.serial.close()
+
 
     print("Ports Closed")
