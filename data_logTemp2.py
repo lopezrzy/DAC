@@ -85,7 +85,7 @@ try:
                 if rh_index_01 != -1 and temp_index_01 != -1:
                     rh_value_01 = float(last_line_01[rh_index_01 + 3:last_line_01.find('%RH')])
                     temp_value_01 = float(last_line_01[temp_index_01 + 3:last_line_01.find("'C")])
-                    writer.writerow({'Date': date, 'Time': time, 'Zone': "B", 'Subzone': "2", 'Temp': temp_value_01, 'Humidity': rh_value_01})
+                    writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'Temp': temp_value_01, 'Humidity': rh_value_01})
                 sleep(1)
                 THUM_01.write("CLOSE\r\n")
                 sleep(1)
