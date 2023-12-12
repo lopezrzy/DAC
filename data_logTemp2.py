@@ -64,7 +64,10 @@ try:
                     rh_value_00 = float(last_line_00[rh_index_00 + 3:last_line_00.find('%RH')])
                     temp_value_00 = float(last_line_00[temp_index_00 + 3:last_line_00.find("'C")])
                     writer.writerow({'Date': date, 'Time': time, 'IO': "Inlet", 'Temp': temp_value_00, 'Humidity': rh_value_00})
-                sleep(1)
+              print(f"RH from Device 00: {rh_value_00}")  
+              print(f"Temp from Device 00: {temp_value_00}")  
+          
+              sleep(1)
                 THUM_00.write("CLOSE\r\n")
                 sleep(1)
             except Exception as e:
@@ -86,6 +89,8 @@ try:
                     rh_value_01 = float(last_line_01[rh_index_01 + 3:last_line_01.find('%RH')])
                     temp_value_01 = float(last_line_01[temp_index_01 + 3:last_line_01.find("'C")])
                     writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'Temp': temp_value_01, 'Humidity': rh_value_01})
+                print(f"RH from Device 01: {rh_value_01}")  
+                print(f"Temp from Device 01: {temp_value_01}")  
                 sleep(1)
                 THUM_01.write("CLOSE\r\n")
                 sleep(1)
