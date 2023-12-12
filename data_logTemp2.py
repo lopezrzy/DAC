@@ -8,6 +8,9 @@ import io
 import os
 import sys  # Import sys module for KeyboardInterrupt handling
 
+
+
+
 # Define a function to get the current date and time in the required format
 def get_datetime():
     now = datetime.datetime.now()
@@ -29,8 +32,26 @@ def parse_data(data):
             temperature = float(ta_match.group(1))
                 
     return humidity, temperature, date, time_ 
-  
 
+# Configuration of GMP-252 ID=43
+carbo_43 = minimalmodbus.Instrument('/dev/ttyACM0',43)
+carbo_43.serial.baudrate = 19200
+carbo_43.serial.bytesize = 8
+carbo_43.serial.parity = minimalmodbus.serial.PARITY_NONE
+carbo_43.serial.stopbits = 2
+carbo_43.mode = minimalmodbus.MODE_RTU
+carbo_43.clear_buffers_before_each_transaction = True
+carbo_43.close_port_after_each_call = True
+
+# Configuration of GMP-252 ID=44
+carbo_44 = minimalmodbus.Instrument('/dev/ttyACM0',44)
+carbo_44.serial.baudrate = 19200
+carbo_44.serial.bytesize = 8
+carbo_44.serial.parity = minimalmodbus.serial.PARITY_NONE
+carbo_44.serial.stopbits = 2
+carbo_44.mode = minimalmodbus.MODE_RTU
+carbo_44.clear_buffers_before_each_transaction = True
+carbo_44.close_port_after_each_call = True
   
 # Configuration of HMP-155
 serial_THUM = serial.Serial("/dev/ttyACM0",
@@ -69,7 +90,24 @@ try:
           print('writing header')
           
         while True:
-            print('writing')
+            date, time = get_datetime()
+            try:
+                carbon_conc_43 = carbo_43.read_float(1, 3, 2, 0)
+                sleep(1)
+                writer.writerow({'Date': date, 'Time': time, 'IO': "Inlet", 'CO2 conc': carbon_conc_43})
+                sleep(1)
+            except Exception as e:
+                now = get_datetime()
+                print(f"Error reading carbo_43 at {now[1]} on {now[0]}: {e}")
+
+            try:
+                carbon_conc_44 = carbo_44.read_float(1, 3, 2, 0)
+                sleep(1)
+                writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'CO2 conc': carbon_conc_44})
+                sleep(1)
+            except Exception as e:
+                now = get_datetime()
+                print(f"Error reading carbo_44 at {now[1]} on {now[0]}: {e}")
 
             try:
                 THUM_00.write("OPEN 01\r\n")
@@ -104,7 +142,11 @@ try:
                 print(f"Error reading THUM_01 at {now[1]} on {now[0]}: {e}")
 
 except KeyboardInterrupt:
-
+    # Close serial ports only if they are open
+    if carbo_43.serial.is_open:
+        carbo_43.serial.close()
+    if carbo_44.serial.is_open:
+        carbo_44.serial.close()
 
     print("Ports Closed")
 finally:
