@@ -7,7 +7,28 @@ import io
 import os
 import sys  # Import sys module for KeyboardInterrupt handling
 
-
+def parse_data(data):
+    # Check if the input contains only 'R', 'H', 'T', 'a', and allowed special characters
+    current_time = time.strftime("%Y-%m-%d %H:%M:%S")
+    humidity = None
+    temperature = None 
+    # Check if only the characters in [] exist in the string
+    if re.match(r'^[RH= Ta.0-9\'C % ]+$', data):
+        # Use regular expressions to extract numeric values for RH and Ta
+        rh_match = re.search(r'RH= ([\d.]+)', data)
+        ta_match = re.search(r'Ta= ([\d.]+)', data)
+        # Check if both matches are found
+        if rh_match and ta_match:
+            humidity = float(rh_match.group(1))
+            temperature = float(ta_match.group(1))
+                
+    return humidity, temperature, current_time
+  
+# Define a function to get the current date and time in the required format
+def get_datetime():
+    now = datetime.datetime.now()
+    return now.strftime("%m/%d/%Y"), now.strftime("%H:%M")
+  
 # Configuration of HMP-155
 serial_THUM = serial.Serial("/dev/ttyACM0",
                    baudrate=4800,
@@ -23,10 +44,6 @@ THUM_01 = io.TextIOWrapper(io.BufferedRWPair(serial_THUM, serial_THUM))
 print(THUM_00)
 print(THUM_01)
 
-# Define a function to get the current date and time in the required format
-def get_datetime():
-    now = datetime.datetime.now()
-    return now.strftime("%m/%d/%Y"), now.strftime("%H:%M")
 
 # Generate a unique filename with a timestamp
 timestamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
@@ -53,25 +70,29 @@ try:
             print('writing')
 
             try:
-                THUM_00.write("OPEN 0\r\n")
+                THUM_00.write("OPEN 01\r\n")
                 THUM_00.flush()
                 sleep(1)
                 THUM_00.write("SEND\r\n")
                 THUM_00.flush()
                 sleep(1)
-                data_00 = THUM_00.readlines()
-                last_line_00 = data_00[-1]
-                rh_index_00 = last_line_00.find('RH=')
-                temp_index_00 = last_line_00.find("Ta=")
-                if rh_index_00 != -1 and temp_index_00 != -1:
-                    rh_value_00 = float(last_line_00[rh_index_00 + 3:last_line_00.find('%RH')])
-                    temp_value_00 = float(last_line_00[temp_index_00 + 3:last_line_00.find("'C")])
-                    writer.writerow({'Date': date, 'Time': time, 'IO': "Inlet", 'Temp': temp_value_00, 'Humidity': rh_value_00})
-                print(f"RH from Device 00: {rh_value_00}")  
-                print(f"Temp from Device 00: {temp_value_00}")  
-                sleep(1)
-                THUM_00.write("CLOSE\r\n")
-                sleep(1)
+                data_00 = THUM_00.readline().strip()
+                humidity, temperature, current_time = parse_data(data_00)
+                csv_writer.writerow([current_time, temperature, humidity, device_number])
+                csv_file.flush()  # Flush the buffer to ensure data is written immediately
+                sleep(5)
+               # last_line_00 = data_00[-1]
+                #rh_index_00 = last_line_00.find('RH=')
+       #         temp_index_00 = last_line_00.find("Ta=")
+        #        if rh_index_00 != -1 and temp_index_00 != -1:
+         #           rh_value_00 = float(last_line_00[rh_index_00 + 3:last_line_00.find('%RH')])
+          #          temp_value_00 = float(last_line_00[temp_index_00 + 3:last_line_00.find("'C")])
+           #         writer.writerow({'Date': date, 'Time': time, 'IO': "Inlet", 'Temp': temp_value_00, 'Humidity': rh_value_00})
+            #    print(f"RH from Device 00: {rh_value_00}")  
+             #   print(f"Temp from Device 00: {temp_value_00}")  
+              #  sleep(1)
+               # THUM_00.write("CLOSE\r\n")
+               # sleep(1)
             except Exception as e:
                 now = get_datetime()
                 print(f"Error reading THUM_00 at {now[1]} on {now[0]}: {e}")
@@ -83,19 +104,24 @@ try:
                 THUM_01.write("SEND\r\n")
                 THUM_01.flush()
                 sleep(1)
-                data_01 = THUM_01.readlines()
-                last_line_01 = data_01[-1]
-                rh_index_01 = last_line_01.find('RH=')
-                temp_index_01 = last_line_01.find("Ta=")
-                if rh_index_01 != -1 and temp_index_01 != -1:
-                    rh_value_01 = float(last_line_01[rh_index_01 + 3:last_line_01.find('%RH')])
-                    temp_value_01 = float(last_line_01[temp_index_01 + 3:last_line_01.find("'C")])
-                    writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'Temp': temp_value_01, 'Humidity': rh_value_01})
-                print(f"RH from Device 00: {rh_value_01}")  
-                print(f"Temp from Device 00: {temp_value_01}")  
-                sleep(1)
-                THUM_01.write("CLOSE\r\n")
-                sleep(1)
+                data_01 = THUM_01.readline().strip()
+                humidity, temperature, current_time = parse_data(data_01)
+                csv_writer.writerow([current_time, temperature, humidity, device_number])
+                csv_file.flush()  # Flush the buffer to ensure data is written immediately
+                sleep(5)
+              
+#                last_line_01 = data_01[-1]
+ #               rh_index_01 = last_line_01.find('RH=')
+  #              temp_index_01 = last_line_01.find("Ta=")
+   #             if rh_index_01 != -1 and temp_index_01 != -1:
+    #                rh_value_01 = float(last_line_01[rh_index_01 + 3:last_line_01.find('%RH')])
+     #               temp_value_01 = float(last_line_01[temp_index_01 + 3:last_line_01.find("'C")])
+      #              writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'Temp': temp_value_01, 'Humidity': rh_value_01})
+       #         print(f"RH from Device 00: {rh_value_01}")  
+        #        print(f"Temp from Device 00: {temp_value_01}")  
+           #     sleep(1)
+         #       THUM_01.write("CLOSE\r\n")
+          #      sleep(1)
             except Exception as e:
                 now = get_datetime()
                 print(f"Error reading THUM_01 at {now[1]} on {now[0]}: {e}")
