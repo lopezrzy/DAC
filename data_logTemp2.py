@@ -20,7 +20,8 @@ serial_THUM = serial.Serial("/dev/ttyACM0",
 THUM_00 = io.TextIOWrapper(io.BufferedRWPair(serial_THUM, serial_THUM))
 THUM_01 = io.TextIOWrapper(io.BufferedRWPair(serial_THUM, serial_THUM))
 
-
+print(THUM_00)
+print(THUM_01)
 
 # Define a function to get the current date and time in the required format
 def get_datetime():
@@ -32,6 +33,7 @@ timestamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
 
 # Define the file path for the CSV file
 data_pathway = f"/home/dac/DAC/meas/sensors_readings_{timestamp}.csv"
+print (data_pathway)
 
 # Check if the file is empty
 file_exists = os.path.exists(data_pathway) and os.path.getsize(data_pathway) > 0
@@ -49,6 +51,7 @@ try:
 
         while True:
             date, time = get_datetime()
+            print(writing)
 
             try:
                 THUM_00.write("OPEN 0\r\n")
