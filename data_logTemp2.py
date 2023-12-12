@@ -30,7 +30,7 @@ def get_datetime():
 timestamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
 
 # Define the file path for the CSV file
-data_pathway = f"/home/DAC/meas/sensors_readings_{timestamp}.csv"
+data_pathway = f"/home/dac/DAC/meas/sensors_readings_{timestamp}.csv"
 
 # Check if the file is empty
 file_exists = os.path.exists(data_pathway) and os.path.getsize(data_pathway) > 0
