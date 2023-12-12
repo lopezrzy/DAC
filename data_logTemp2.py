@@ -79,7 +79,7 @@ try:
                 sleep(1)
                 data_00 = THUM_00.readline().strip()
                 humidity, temperature, current_time = parse_data(data_00)
-                csv_writer.writerow([current_time, temperature, humidity, device_number])
+                writer.writerow([current_time, temperature, humidity, device_number])
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
                 sleep(5)
                # last_line_00 = data_00[-1]
@@ -107,7 +107,7 @@ try:
                 sleep(1)
                 data_01 = THUM_01.readline().strip()
                 humidity, temperature, current_time = parse_data(data_01)
-                csv_writer.writerow([current_time, temperature, humidity, device_number])
+                writer.writerow([current_time, temperature, humidity, device_number])
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
                 sleep(5)
               
