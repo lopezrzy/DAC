@@ -9,7 +9,7 @@ import sys  # Import sys module for KeyboardInterrupt handling
 
 def parse_data(data):
     # Check if the input contains only 'R', 'H', 'T', 'a', and allowed special characters
-    current_time = time.strftime("%Y-%m-%d %H:%M:%S")
+    current_time = get_datetime()
     humidity = None
     temperature = None 
     # Check if only the characters in [] exist in the string
