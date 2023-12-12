@@ -101,8 +101,4 @@ except KeyboardInterrupt:
 
 
     print("Ports Closed")
-finally:
-    # Close the CSV file
-    if 'csv_file' in locals():
-        csv_file.close()
-    sys.exit(0)
+
