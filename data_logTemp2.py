@@ -66,7 +66,7 @@ try:
           print('writing header')
           
         while True:
-            date, time = get_datetime()
+            date, time_ = get_datetime()
             print('writing')
 
             try:
