@@ -90,7 +90,7 @@ try:
                 carbon_conc_43 = carbo_43.read_float(1, 3, 2, 0)
                 sleep(1)
                 writer.writerow({'Date': date, 'Time': time, 'IO': "Inlet", 'CO2 conc': carbon_conc_43})
-                print('Inlet (43)' + str(carbon_conc_43) )
+                print('Inlet CCO2 (43) ' + str(carbon_conc_43) )
                 sleep(1)
             except Exception as e:
                 now = get_datetime()
@@ -100,14 +100,13 @@ try:
                 carbon_conc_44 = carbo_44.read_float(1, 3, 2, 0)
                 sleep(1)
                 writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'CO2 conc': carbon_conc_44})
-                print('Outlet (44)' + str(carbon_conc_44) )
+                print('Outlet CCO2 (44) ' + str(carbon_conc_44) )
                 sleep(1)
             except Exception as e:
                 now = get_datetime()
                 print(f"Error reading carbo_44 at {now[1]} on {now[0]}: {e}")
     
             try:
-                print('reading thum0')
                 THUM_00.write("OPEN 0\r\n")
                 THUM_00.flush()
                 sleep(1)
@@ -126,7 +125,6 @@ try:
                 print(f"Error reading THUM_00 at {now[1]} on {now[0]}: {e}")
                     
             try:
-                print('reading thum1')
                 THUM_01.write("OPEN 1\r\n")
                 THUM_01.flush()
                 sleep(1)
