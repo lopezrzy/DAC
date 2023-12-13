@@ -71,8 +71,7 @@ print(THUM_01)
 timestamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
 
 # Define the file path for the CSV file
-data_pathway = f"/home/dac/DAC/meas/sensors_readings_{timestamp}.csv"
-print(data_pathway)
+data_pathway = f"/home/dac/DAC/meas/tempRHCO2_readings_{timestamp}.csv"
 
 # Check if the file is empty
 file_exists = os.path.exists(data_pathway) and os.path.getsize(data_pathway) > 0
@@ -152,12 +151,64 @@ try:
             
 
 except KeyboardInterrupt:
-  # Close serial ports only if they are open
-  if carbo_43.serial.is_open:
-    carbo_43.serial.close()
-  if carbo_44.serial.is_open:
-    carbo_44.serial.close()
-  print("Ports Closed")
+    
+    # Close serial ports only if they are open
+    if carbo_43.serial.is_open:
+        carbo_43.serial.close() 
+    if carbo_44.serial.is_open:
+        carbo_44.serial.close()
+    print("Ports Closed")
+    except KeyboardInterrupt:
+    # Close serial ports only if they are open
+    if carbo_43.serial.is_open:
+        carbo_43.serial.close()
+    if carbo_44.serial.is_open:
+        carbo_44.serial.close()
+    print("Ports Closed")
+
+    try:
+        # Create a new CSV file for CO2 readings
+        co2_data_pathway = f"/home/dac/DAC/meas/CO2_readings_{timestamp}.csv"
+        with open(co2_data_pathway, mode='w', newline='') as co2_csv_file:
+            co2_fieldnames = ['Date', 'Time', 'IO', 'CO2 conc']
+            co2_writer = csv.DictWriter(co2_csv_file, fieldnames=co2_fieldnames)
+            co2_writer.writeheader()
+
+            # Write rows with CO2 data to the new CSV file
+            with open(data_pathway, mode='r') as original_csv_file:
+                csv_reader = csv.DictReader(original_csv_file)
+                for row in csv_reader:
+                    if 'CO2 conc' in row and row['CO2 conc']:
+                        co2_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'IO': row['IO'], 'CO2 conc': row['CO2 conc']})
+
+        print(f"CO2 data saved to {co2_data_pathway}")
+
+        # Create a temporary CSV file for temperature and humidity data
+        temp_humidity_data_pathway = f"/home/dac/DAC/meas/temp_humidity_readings_temp.csv"
+        with open(temp_humidity_data_pathway, mode='w', newline='') as temp_humidity_csv_file:
+            temp_humidity_fieldnames = ['Date', 'Time', 'IO', 'Temp', 'Humidity']
+            temp_humidity_writer = csv.DictWriter(temp_humidity_csv_file, fieldnames=temp_humidity_fieldnames)
+            temp_humidity_writer.writeheader()
+
+            # Write rows with temperature and humidity data to the temporary CSV file
+            with open(data_pathway, mode='r') as original_csv_file:
+                csv_reader = csv.DictReader(original_csv_file)
+                for row in csv_reader:
+                    if 'Temp' in row and 'Humidity' in row:
+                        temp_humidity_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'IO': row['IO'], 'Temp': row['Temp'], 'Humidity': row['Humidity']})
+
+        print(f"Temperature and humidity data saved to {temp_humidity_data_pathway}")
+
+        # Replace the original CSV file with the temporary one
+        os.remove(data_pathway)
+        os.rename(temp_humidity_data_pathway, data_pathway)
+
+        print("Original CSV file updated with temperature and humidity data.")
+
+    except Exception as e:
+        print(f"Error during KeyboardInterrupt handling: {e}")
+
+
 finally:
     # Close the CSV file before exiting
     if 'csv_file' in locals():
