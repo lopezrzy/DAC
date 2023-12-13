@@ -68,7 +68,7 @@ try:
         while True: 
     
             try:
-                THUM_00.write("OPEN 01\r\n")
+                THUM_00.write("OPEN 0\r\n")
                 THUM_00.flush()
                 sleep(1)
                 THUM_00.write("SEND\r\n")
@@ -84,7 +84,7 @@ try:
                 print(f"Error reading THUM_00 at {now[1]} on {now[0]}: {e}")
                     
             try:
-                THUM_01.write("OPEN 01\r\n")
+                THUM_01.write("OPEN 1\r\n")
                 THUM_01.flush()
                 sleep(1)
                 THUM_01.write("SEND\r\n")
