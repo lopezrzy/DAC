@@ -32,7 +32,7 @@ def parse_data(data):
 
 
 # Configuration of GMP-252 ID=43
-carbo_43 = minimalmodbus.Instrument('/dev/ttyUSB1',43)
+carbo_43 = minimalmodbus.Instrument('/dev/ttyUSB0',43)
 carbo_43.serial.baudrate = 19200
 carbo_43.serial.bytesize = 8
 carbo_43.serial.parity = minimalmodbus.serial.PARITY_NONE
@@ -42,7 +42,7 @@ carbo_43.clear_buffers_before_each_transaction = True
 carbo_43.close_port_after_each_call = True
 
 # Configuration of GMP-252 ID=44
-carbo_44 = minimalmodbus.Instrument('/dev/ttyUSB1',44)
+carbo_44 = minimalmodbus.Instrument('/dev/ttyUSB0',44)
 carbo_44.serial.baudrate = 19200
 carbo_44.serial.bytesize = 8
 carbo_44.serial.parity = minimalmodbus.serial.PARITY_NONE
