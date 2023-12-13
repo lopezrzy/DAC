@@ -91,6 +91,7 @@ try:
             print('measuring')
     
             try:
+                print('reading thum0')
                 THUM_00.write("OPEN 0\r\n")
                 THUM_00.flush()
                 sleep(1)
@@ -109,6 +110,7 @@ try:
                 print(f"Error reading THUM_00 at {now[1]} on {now[0]}: {e}")
                     
             try:
+                print('reading thum1')
                 THUM_01.write("OPEN 1\r\n")
                 THUM_01.flush()
                 sleep(1)
@@ -128,6 +130,7 @@ try:
             
             date, time = get_datetime()
             try:
+                print('co2 43')
                 carbon_conc_43 = carbo_43.read_float(1, 3, 2, 0)
                 sleep(1)
                 writer.writerow({'Date': date, 'Time': time, 'IO': "Inlet", 'CO2 conc': carbon_conc_43})
@@ -138,6 +141,7 @@ try:
                 print(f"Error reading carbo_43 at {now[1]} on {now[0]}: {e}")
 
             try:
+                print('co2 44')
                 carbon_conc_44 = carbo_44.read_float(1, 3, 2, 0)
                 sleep(1)
                 writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'CO2 conc': carbon_conc_44})
