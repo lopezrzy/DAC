@@ -31,7 +31,7 @@ def parse_data(data):
     return humidity, temperature, date, time_ 
   
 # Configuration of HMP-155
-serial_THUM = serial.Serial("/dev/ttyACM0",
+serial_THUM = serial.Serial("/dev/ttyUSB0",
                    baudrate=4800,
                    bytesize=serial.SEVENBITS,
                    parity=serial.PARITY_EVEN,
