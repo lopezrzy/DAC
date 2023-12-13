@@ -186,7 +186,7 @@ except KeyboardInterrupt:
             with open(data_pathway, mode='r') as original_csv_file:
                 csv_reader = csv.DictReader(original_csv_file)
                 for row in csv_reader:
-                    if 'Temp' in row and 'Humidity' in row:
+                    if 'Temp' in row and 'Humidity' in row and (row['Temp'] or row['Humidity']):
                         temp_humidity_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'IO': row['IO'], 'Temp': row['Temp'], 'Humidity': row['Humidity']})
 
         print(f"Temperature and humidity data saved to {temp_humidity_data_pathway}")
