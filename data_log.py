@@ -98,6 +98,8 @@ try:
                 sleep(1)
                 data_00 = THUM_00.readline().strip()
                 rh, temperature, date, time_  = parse_data(data_00)
+                print('Inlet rh is ' + str(rh))
+                print('Inlet temp is ' + str(temperature))
                 writer.writerow({'Date': date, 'Time': time_, 'IO': "Inlet", 'Temp': temperature, 'Humidity': rh})
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
                 sleep(5)
@@ -114,6 +116,8 @@ try:
                 sleep(1)
                 data_01 = THUM_01.readline().strip()
                 rh, temperature, date, time_  = parse_data(data_01)
+                print('Inlet rh is ' + str(rh))
+                print('Inlet temp is ' + str(temperature))
                 writer.writerow({'Date': date, 'Time': time_, 'IO': "Outlet", 'Temp': temperature, 'Humidity': rh})
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
                 sleep(5)
