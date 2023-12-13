@@ -90,11 +90,10 @@ try:
             print('measuring')
             date, time = get_datetime()
             try:
-                print('co2 43')
                 carbon_conc_43 = carbo_43.read_float(1, 3, 2, 0)
                 sleep(1)
                 writer.writerow({'Date': date, 'Time': time, 'IO': "Inlet", 'CO2 conc': carbon_conc_43})
-                print('Inlet ' + str(carbon_conc_43) )
+                print('Inlet (43)' + str(carbon_conc_43) )
                 sleep(1)
             except Exception as e:
                 now = get_datetime()
@@ -105,7 +104,7 @@ try:
                 carbon_conc_44 = carbo_44.read_float(1, 3, 2, 0)
                 sleep(1)
                 writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'CO2 conc': carbon_conc_44})
-                print('Outlet ' + str(carbon_conc_44) )
+                print('Outlet (44)' + str(carbon_conc_44) )
                 sleep(1)
             except Exception as e:
                 now = get_datetime()
@@ -121,8 +120,8 @@ try:
                 sleep(1)
                 data_00 = THUM_00.readline().strip()
                 rh, temperature, date, time_  = parse_data(data_00)
-                print('Inlet rh is ' + str(rh))
-                print('Inlet temp is ' + str(temperature))
+                print('Inlet rh (0) is ' + str(rh))
+                print('Inlet temp (0) is ' + str(temperature))
                 writer.writerow({'Date': date, 'Time': time_, 'IO': "Inlet", 'Temp': temperature, 'Humidity': rh})
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
                 sleep(5)
@@ -140,8 +139,8 @@ try:
                 sleep(1)
                 data_01 = THUM_01.readline().strip()
                 rh, temperature, date, time_  = parse_data(data_01)
-                print('Outlet rh is ' + str(rh))
-                print('Outlet temp is ' + str(temperature))
+                print('Outlet rh (1) is ' + str(rh))
+                print('Outlet temp (1) is ' + str(temperature))
                 writer.writerow({'Date': date, 'Time': time_, 'IO': "Outlet", 'Temp': temperature, 'Humidity': rh})
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
                 sleep(5)
