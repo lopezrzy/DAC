@@ -184,7 +184,7 @@ except KeyboardInterrupt:
         print(f"CO2 data saved to {co2_data_pathway}")
 
         # Create a temporary CSV file for temperature and humidity data
-        temp_humidity_data_pathway = f"/home/dac/DAC/meas/temp_humidity_readings_temp.csv"
+        temp_humidity_data_pathway = f"/home/dac/DAC/meas/temp_humidity_readings_temp_{timestamp}.csv"
         with open(temp_humidity_data_pathway, mode='w', newline='') as temp_humidity_csv_file:
             temp_humidity_fieldnames = ['Date', 'Time', 'IO', 'Temp', 'Humidity']
             temp_humidity_writer = csv.DictWriter(temp_humidity_csv_file, fieldnames=temp_humidity_fieldnames)
