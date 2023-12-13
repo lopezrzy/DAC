@@ -64,8 +64,6 @@ serial_THUM = serial.Serial("/dev/ttyUSB0",
 THUM_00 = io.TextIOWrapper(io.BufferedRWPair(serial_THUM, serial_THUM))
 THUM_01 = io.TextIOWrapper(io.BufferedRWPair(serial_THUM, serial_THUM))
 
-print(THUM_00)
-print(THUM_01)
 
 # Generate a unique filename with a timestamp
 timestamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
@@ -84,10 +82,9 @@ try:
         # Write the header only if the file is empty
         if not file_exists:
             writer.writeheader()
-            print('writing header')
             
         while True: 
-            print('measuring')
+            print('__________________________________________')
             date, time = get_datetime()
             try:
                 carbon_conc_43 = carbo_43.read_float(1, 3, 2, 0)
@@ -100,7 +97,6 @@ try:
                 print(f"Error reading carbo_43 at {now[1]} on {now[0]}: {e}")
 
             try:
-                print('co2 44')
                 carbon_conc_44 = carbo_44.read_float(1, 3, 2, 0)
                 sleep(1)
                 writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'CO2 conc': carbon_conc_44})
