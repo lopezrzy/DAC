@@ -86,10 +86,10 @@ try:
 
             try:
                 carbon_conc_44 = carbo_44.read_float(1, 3, 2, 0)
-                sleep(1)
+                sleep(2)
                 writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'CO2 conc': carbon_conc_44})
                 print('Inlet' + str(carbon_conc_44) )
-                sleep(1)
+                sleep(3)
             except Exception as e:
                 now = get_datetime()
                 print(f"Error reading carbo_44 at {now[1]} on {now[0]}: {e}")
