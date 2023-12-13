@@ -89,6 +89,28 @@ try:
             
         while True: 
             print('measuring')
+            date, time = get_datetime()
+            try:
+                print('co2 43')
+                carbon_conc_43 = carbo_43.read_float(1, 3, 2, 0)
+                sleep(1)
+                writer.writerow({'Date': date, 'Time': time, 'IO': "Inlet", 'CO2 conc': carbon_conc_43})
+                print('Inlet ' + str(carbon_conc_43) )
+                sleep(1)
+            except Exception as e:
+                now = get_datetime()
+                print(f"Error reading carbo_43 at {now[1]} on {now[0]}: {e}")
+
+            try:
+                print('co2 44')
+                carbon_conc_44 = carbo_44.read_float(1, 3, 2, 0)
+                sleep(1)
+                writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'CO2 conc': carbon_conc_44})
+                print('Outlet ' + str(carbon_conc_44) )
+                sleep(1)
+            except Exception as e:
+                now = get_datetime()
+                print(f"Error reading carbo_44 at {now[1]} on {now[0]}: {e}")
     
             try:
                 print('reading thum0')
@@ -128,28 +150,6 @@ try:
                 now = get_datetime()
                 print(f"Error reading THUM_01 at {now[1]} on {now[0]}: {e}")
             
-            date, time = get_datetime()
-            try:
-                print('co2 43')
-                carbon_conc_43 = carbo_43.read_float(1, 3, 2, 0)
-                sleep(1)
-                writer.writerow({'Date': date, 'Time': time, 'IO': "Inlet", 'CO2 conc': carbon_conc_43})
-                print('Inlet ' + str(carbon_conc_43) )
-                sleep(1)
-            except Exception as e:
-                now = get_datetime()
-                print(f"Error reading carbo_43 at {now[1]} on {now[0]}: {e}")
-
-            try:
-                print('co2 44')
-                carbon_conc_44 = carbo_44.read_float(1, 3, 2, 0)
-                sleep(1)
-                writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'CO2 conc': carbon_conc_44})
-                print('Outlet ' + str(carbon_conc_44) )
-                sleep(1)
-            except Exception as e:
-                now = get_datetime()
-                print(f"Error reading carbo_44 at {now[1]} on {now[0]}: {e}")
 
 except KeyboardInterrupt:
   # Close serial ports only if they are open
