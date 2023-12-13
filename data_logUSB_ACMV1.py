@@ -22,7 +22,7 @@ def sendData(co2_data_pathway, temp_humidity_data_pathway):
       today_date2 = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
       subject_ = f'DAC data: {today_date}'      
       body = f'DAC data from {today_date2}'
-      yag.send(to=rec, subject=subject_, contents=body, attachments= [co2_data_pathway, temp_humidity_data_pathway]])
+      yag.send(to=rec, subject=subject_, contents=body, attachments= [co2_data_pathway, temp_humidity_data_pathway])
 
       print("Email sent successfully!")
   
