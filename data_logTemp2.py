@@ -64,38 +64,40 @@ try:
         if not file_exists:
             writer.writeheader()
             print('writing header')
-
-        try:
-            THUM_00.write("OPEN 01\r\n")
-            THUM_00.flush()
-            sleep(1)
-            THUM_00.write("SEND\r\n")
-            THUM_00.flush()
-            sleep(1)
-            data_00 = THUM_00.readline().strip()
-            rh, temperature, date, time_  = parse_data(data_00)
-            writer.writerow({'Date': date, 'Time': time_, 'IO': "Inlet", 'Temp': temperature, 'Humidity': rh})
-            csv_file.flush()  # Flush the buffer to ensure data is written immediately
-            sleep(5)
-        except Exception as e:
-            now = get_datetime()
-            print(f"Error reading THUM_00 at {now[1]} on {now[0]}: {e}")
-                
-        try:
-            THUM_01.write("OPEN 01\r\n")
-            THUM_01.flush()
-            sleep(1)
-            THUM_01.write("SEND\r\n")
-            THUM_01.flush()
-            sleep(1)
-            data_01 = THUM_01.readline().strip()
-            rh, temperature, date, time_  = parse_data(data_01)
-            writer.writerow({'Date': date, 'Time': time_, 'IO': "Outlet", 'Temp': temperature, 'Humidity': rh})
-            csv_file.flush()  # Flush the buffer to ensure data is written immediately
-            sleep(5)
-        except Exception as e:
-            now = get_datetime()
-            print(f"Error reading THUM_01 at {now[1]} on {now[0]}: {e}")
+            
+        while True: 
+    
+            try:
+                THUM_00.write("OPEN 01\r\n")
+                THUM_00.flush()
+                sleep(1)
+                THUM_00.write("SEND\r\n")
+                THUM_00.flush()
+                sleep(1)
+                data_00 = THUM_00.readline().strip()
+                rh, temperature, date, time_  = parse_data(data_00)
+                writer.writerow({'Date': date, 'Time': time_, 'IO': "Inlet", 'Temp': temperature, 'Humidity': rh})
+                csv_file.flush()  # Flush the buffer to ensure data is written immediately
+                sleep(5)
+            except Exception as e:
+                now = get_datetime()
+                print(f"Error reading THUM_00 at {now[1]} on {now[0]}: {e}")
+                    
+            try:
+                THUM_01.write("OPEN 01\r\n")
+                THUM_01.flush()
+                sleep(1)
+                THUM_01.write("SEND\r\n")
+                THUM_01.flush()
+                sleep(1)
+                data_01 = THUM_01.readline().strip()
+                rh, temperature, date, time_  = parse_data(data_01)
+                writer.writerow({'Date': date, 'Time': time_, 'IO': "Outlet", 'Temp': temperature, 'Humidity': rh})
+                csv_file.flush()  # Flush the buffer to ensure data is written immediately
+                sleep(5)
+            except Exception as e:
+                now = get_datetime()
+                print(f"Error reading THUM_01 at {now[1]} on {now[0]}: {e}")
 
 except KeyboardInterrupt:
     print("Ports Closed")
