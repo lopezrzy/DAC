@@ -11,8 +11,8 @@ import sys  # Import sys module for KeyboardInterrupt handling
 
 def sendData(co2_data_pathway, temp_humidity_data_pathway):
   # Set up your yagmail instance
-  email_address = 'zulma.vrcingenieria@gmail.com'
-  password = 'wakeupnow.'
+  email_address = 'dacceakaust@gmail.com '
+  password = 'dac202312'
   yag = yagmail.SMTP(email_address, password)
   
   try:
