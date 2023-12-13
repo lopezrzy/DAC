@@ -84,8 +84,9 @@ try:
             writer.writeheader()
             
         while True: 
-            print('__________________________________________')
+            print('____________________________________________________')
             date, time = get_datetime()
+            print(date + ' ' + time)
             try:
                 carbon_conc_43 = carbo_43.read_float(1, 3, 2, 0)
                 sleep(1)
