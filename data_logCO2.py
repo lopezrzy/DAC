@@ -78,7 +78,7 @@ try:
                 carbon_conc_43 = carbo_43.read_float(1, 3, 2, 0)
                 sleep(1)
                 writer.writerow({'Date': date, 'Time': time, 'IO': "Inlet", 'CO2 conc': carbon_conc_43})
-                print('Inlet' + str(carbon_conc_43) )
+                print('Inlet ' + str(carbon_conc_43) )
                 sleep(1)
             except Exception as e:
                 now = get_datetime()
@@ -88,7 +88,7 @@ try:
                 carbon_conc_44 = carbo_44.read_float(1, 3, 2, 0)
                 sleep(2)
                 writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'CO2 conc': carbon_conc_44})
-                print('Inlet' + str(carbon_conc_44) )
+                print('Outlet ' + str(carbon_conc_44) )
                 sleep(3)
             except Exception as e:
                 now = get_datetime()
