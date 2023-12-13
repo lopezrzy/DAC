@@ -166,7 +166,7 @@ except KeyboardInterrupt:
                 for row in csv_reader:
                     if 'CO2 conc' in row and row['CO2 conc']:
                         co2_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'IO': row['IO'], 'CO2 conc': row['CO2 conc']})
-
+        print('____________________________________________________')
         print(f"CO2 data saved to {co2_data_pathway}")
 
         # Create a temporary CSV file for temperature and humidity data
@@ -183,13 +183,12 @@ except KeyboardInterrupt:
                     if 'Temp' in row and 'Humidity' in row and (row['Temp'] or row['Humidity']):
                         temp_humidity_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'IO': row['IO'], 'Temp': row['Temp'], 'Humidity': row['Humidity']})
 
+        print('____________________________________________________')
         print(f"Temperature and humidity data saved to {temp_humidity_data_pathway}")
 
         # Replace the original CSV file with the temporary one
         os.remove(data_pathway)
         os.rename(temp_humidity_data_pathway, data_pathway)
-
-        print("Original CSV file updated with temperature and humidity data.")
 
     except Exception as e:
         print(f"Error during KeyboardInterrupt handling: {e}")
