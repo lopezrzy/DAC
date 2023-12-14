@@ -156,50 +156,6 @@ except KeyboardInterrupt:
         carbo_44.serial.close()
     print("Ports Closed")
 
-    try:
-        # Create a new CSV file for CO2 readings
-        co2_data_pathway = f"/home/dac/DAC/meas/CO2_readings_{timestamp}.csv"
-        with open(co2_data_pathway, mode='w', newline='') as co2_csv_file:
-            co2_fieldnames = ['Date', 'Time', 'Inlet CCO2', 'Outlet CCO2']
-            co2_writer = csv.DictWriter(co2_csv_file, fieldnames=co2_fieldnames)
-            co2_writer.writeheader()
-
-            # Write rows with CO2 data to the new CSV file
-            with open(data_pathway, mode='r') as original_csv_file:
-                csv_reader = csv.DictReader(original_csv_file)
-                for row in csv_reader:
-                    if 'Inlet CCO2' in row and row['Inlet CCO2']:
-                        co2_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'Inlet CCO2': row['Inlet CCO2']})
-                    elif 'Outlet CCO2' in row and row['Outlet CCO2']:
-                        co2_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'Outlet CCO2': row['Outlet CCO2']})
-        print('____________________________________________________\n')
-        print(f"CO2 data saved to {co2_data_pathway}\n")
-
-        # Create a temporary CSV file for temperature and humidity data
-        temp_humidity_data_pathway = f"/home/dac/DAC/meas/temp_humidity_readings_temp_{timestamp}.csv"
-        with open(temp_humidity_data_pathway, mode='w', newline='') as temp_humidity_csv_file:
-            temp_humidity_fieldnames = ['Date', 'Time', 'Inlet Temp', 'Inlet Humidity', 'Outlet Temp', 'Outlet Humidity']
-            temp_humidity_writer = csv.DictWriter(temp_humidity_csv_file, fieldnames=temp_humidity_fieldnames)
-            temp_humidity_writer.writeheader()
-
-            # Write rows with temperature and humidity data to the temporary CSV file
-            with open(data_pathway, mode='r') as original_csv_file:
-                csv_reader = csv.DictReader(original_csv_file)
-                for row in csv_reader:
-                    if 'Inlet Temp' in row and 'Inlet Humidity' in row and (row['Inlet Temp'] or row['Inlet Humidity']):
-                        temp_humidity_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'Inlet Temp': row['Inlet Temp'], 'Inlet Humidity': row['Inlet Humidity'] })
-                    if 'Outlet Temp' in row and 'Outlet Humidity' in row and (row['Outlet Temp'] or row['Outlet Humidity']):
-                        temp_humidity_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'Outlet Temp': row['Outlet Temp'], 'Outlet Humidity': row['Outlet Humidity']})
-        print('____________________________________________________\n')
-        print(f"Temperature and humidity data saved to {temp_humidity_data_pathway}\n")
-
-        # Replace the original CSV file with the temporary one
-        #os.remove(data_pathway)
-        #os.rename(temp_humidity_data_pathway, data_pathway)
-
-    except Exception as e:
-        print(f"Error during KeyboardInterrupt handling: {e}")
-
 
 finally:
     # Close the CSV file before exiting
