@@ -168,8 +168,10 @@ except KeyboardInterrupt:
             with open(data_pathway, mode='r') as original_csv_file:
                 csv_reader = csv.DictReader(original_csv_file)
                 for row in csv_reader:
-                    if 'CO2 conc' in row and row['CO2 conc']:
-                        co2_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'Inlet CCO2': row['Inlet CCO2'], 'Outlet CCO2': row['Outlet CCO2']})
+                    if 'Inlet CCO2' in row and row['Inlet CCO2']:
+                        co2_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'Inlet CCO2': row['Inlet CCO2']})
+                    elif 'Outlet CCO2' in row and row['Outlet CCO2']:
+                        co2_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'Outlet CCO2': row['Outlet CCO2']})
         print('____________________________________________________\n')
         print(f"CO2 data saved to {co2_data_pathway}\n")
 
