@@ -7,7 +7,7 @@ def calculate_minutely_average(dataframe):
     print('_')
     print(dataframe.columns)
     dataframe = dataframe.set_index('Date')
-    #dataframe = dataframe.drop(columns=['Date', 'Time'])
+    dataframe = dataframe.drop(columns=['Time'])
     minutely_avg = dataframe.resample('1T').mean()
     return minutely_avg
 
