@@ -185,7 +185,7 @@ except KeyboardInterrupt:
                 csv_reader = csv.DictReader(original_csv_file)
                 for row in csv_reader:
                     if 'Temp' in row and 'Humidity' in row and (row['Temp'] or row['Humidity']):
-                        temp_humidity_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'Inlet Temp': row['Inlet Temp'], 'Inlet Humidity': row['Inlet Humidity',
+                        temp_humidity_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'Inlet Temp': row['Inlet Temp'], 'Inlet Humidity': row['Inlet Humidity'],
                                                        'Outlet Temp': row['Outlet Temp'], 'Outlet Humidity': row['Outlet Humidity']})
 
         print('____________________________________________________\n')
