@@ -29,7 +29,7 @@ def calculate_minute_averages(input_path):
         else:
             minute_averages[minute] = None
 
-    print minute_averages
+    print (minute_averages)
     return minute_averages
 
 
