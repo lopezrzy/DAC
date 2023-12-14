@@ -40,9 +40,11 @@ def write_minute_averages_to_csv(output_path, minute_averages):
 
         for minute, avg in minute_averages.items():
             row = {'Minute': minute}
-            for key in avg:
-                row[key] = avg[key]
+            if avg:
+                for key, value in avg.items():
+                    row[key] = value
             writer.writerow(row)
+
 
 if __name__ == "__main__":
     input_path = input("Enter the pathway of the CSV file: ")
