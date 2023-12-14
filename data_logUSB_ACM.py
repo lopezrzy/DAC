@@ -76,7 +76,7 @@ file_exists = os.path.exists(data_pathway) and os.path.getsize(data_pathway) > 0
 
 try:
     with open(data_pathway, mode='a', newline='') as csv_file:
-        fieldnames = ['Date', 'Time', 'IO', 'Temp', 'Humidity', 'CO2 conc']
+        fieldnames = ['Date', 'Time', 'Inlet Temp', 'Inlet Humidity',  'Outlet Temp', 'Outlet Humidity','Inlet CCO2', 'Outlet CCO2']
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
         # Write the header only if the file is empty
@@ -90,7 +90,7 @@ try:
             try:
                 carbon_conc_43 = carbo_43.read_float(1, 3, 2, 0)
                 sleep(1)
-                writer.writerow({'Date': date, 'Time': time, 'IO': "Inlet", 'CO2 conc': carbon_conc_43})
+                writer.writerow({'Date': date, 'Time': time, 'Inlet CCO2': carbon_conc_43})
                 print('Inlet CCO2 (43) \t \t' + str(carbon_conc_43) )
                 sleep(1)
             except Exception as e:
@@ -100,7 +100,7 @@ try:
             try:
                 carbon_conc_44 = carbo_44.read_float(1, 3, 2, 0)
                 sleep(1)
-                writer.writerow({'Date': date, 'Time': time, 'IO': "Outlet", 'CO2 conc': carbon_conc_44})
+                writer.writerow({'Date': date, 'Time': time, 'Outlet CCO2': carbon_conc_44})
                 print('Outlet CCO2 (44) \t \t' + str(carbon_conc_44) )
                 sleep(1)
             except Exception as e:
@@ -118,7 +118,7 @@ try:
                 rh, temperature, date, time_  = parse_data(data_00)
                 print('Inlet rh (0) \t \t \t' + str(rh))
                 print('Inlet temp (0) \t \t \t' + str(temperature))
-                writer.writerow({'Date': date, 'Time': time_, 'IO': "Inlet", 'Temp': temperature, 'Humidity': rh})
+                writer.writerow({'Date': date, 'Time': time_, 'Inlet Temp': temperature, 'Inlet Humidity': rh})
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
                 THUM_01.write("CLOSE\r\n")
                 sleep(1)
@@ -138,7 +138,7 @@ try:
                 rh, temperature, date, time_  = parse_data(data_01)
                 print('Outlet rh (1) \t \t \t' + str(rh))
                 print('Outlet temp (1) \t \t' + str(temperature))
-                writer.writerow({'Date': date, 'Time': time_, 'IO': "Outlet", 'Temp': temperature, 'Humidity': rh})
+                writer.writerow({'Date': date, 'Time': time_, 'Outlet Temp': temperature, 'Outlet Humidity': rh})
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
                 THUM_01.write("CLOSE\r\n")
                 sleep(1)
@@ -160,7 +160,7 @@ except KeyboardInterrupt:
         # Create a new CSV file for CO2 readings
         co2_data_pathway = f"/home/dac/DAC/meas/CO2_readings_{timestamp}.csv"
         with open(co2_data_pathway, mode='w', newline='') as co2_csv_file:
-            co2_fieldnames = ['Date', 'Time', 'IO', 'CO2 conc']
+            co2_fieldnames = ['Date', 'Time', 'Inlet CCO2', 'Outlet CCO2']
             co2_writer = csv.DictWriter(co2_csv_file, fieldnames=co2_fieldnames)
             co2_writer.writeheader()
 
@@ -169,14 +169,14 @@ except KeyboardInterrupt:
                 csv_reader = csv.DictReader(original_csv_file)
                 for row in csv_reader:
                     if 'CO2 conc' in row and row['CO2 conc']:
-                        co2_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'IO': row['IO'], 'CO2 conc': row['CO2 conc']})
+                        co2_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'Inlet CCO2': row['Inlet CCO2'], 'Outlet CCO2': row['Outlet CCO2']})
         print('____________________________________________________\n')
         print(f"CO2 data saved to {co2_data_pathway}\n")
 
         # Create a temporary CSV file for temperature and humidity data
         temp_humidity_data_pathway = f"/home/dac/DAC/meas/temp_humidity_readings_temp_{timestamp}.csv"
         with open(temp_humidity_data_pathway, mode='w', newline='') as temp_humidity_csv_file:
-            temp_humidity_fieldnames = ['Date', 'Time', 'IO', 'Temp', 'Humidity']
+            temp_humidity_fieldnames = ['Date', 'Time', 'Inlet Temp', 'Inlet Humidity', 'Outlet Temp', 'Outlet Humidity']
             temp_humidity_writer = csv.DictWriter(temp_humidity_csv_file, fieldnames=temp_humidity_fieldnames)
             temp_humidity_writer.writeheader()
 
@@ -185,7 +185,8 @@ except KeyboardInterrupt:
                 csv_reader = csv.DictReader(original_csv_file)
                 for row in csv_reader:
                     if 'Temp' in row and 'Humidity' in row and (row['Temp'] or row['Humidity']):
-                        temp_humidity_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'IO': row['IO'], 'Temp': row['Temp'], 'Humidity': row['Humidity']})
+                        temp_humidity_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'Inlet Temp': row['Inlet Temp'], 'Inlet Humidity': row['Inlet Humidity',
+                                                       'Outlet Temp': row['Outlet Temp'], 'Outlet Humidity': row['Outlet Humidity']})
 
         print('____________________________________________________\n')
         print(f"Temperature and humidity data saved to {temp_humidity_data_pathway}\n")
