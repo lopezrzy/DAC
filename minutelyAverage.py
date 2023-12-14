@@ -13,7 +13,7 @@ input_path = input("Enter the path to the input CSV file: ")
 
 # Read the CSV file
 try:
-    df = pd.read_csv(input_path, parse_dates=[['Date', 'Time']])
+    df = pd.read_csv(input_path)
 except FileNotFoundError:
     print("File not found. Please provide a valid file path.")
     exit(1)
