@@ -170,8 +170,8 @@ except KeyboardInterrupt:
                 for row in csv_reader:
                     if 'CO2 conc' in row and row['CO2 conc']:
                         co2_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'IO': row['IO'], 'CO2 conc': row['CO2 conc']})
-        print('____________________________________________________')
-        print(f"CO2 data saved to {co2_data_pathway}")
+        print('____________________________________________________\n')
+        print(f"CO2 data saved to {co2_data_pathway}\n")
 
         # Create a temporary CSV file for temperature and humidity data
         temp_humidity_data_pathway = f"/home/dac/DAC/meas/temp_humidity_readings_temp_{timestamp}.csv"
@@ -187,8 +187,8 @@ except KeyboardInterrupt:
                     if 'Temp' in row and 'Humidity' in row and (row['Temp'] or row['Humidity']):
                         temp_humidity_writer.writerow({'Date': row['Date'], 'Time': row['Time'], 'IO': row['IO'], 'Temp': row['Temp'], 'Humidity': row['Humidity']})
 
-        print('____________________________________________________')
-        print(f"Temperature and humidity data saved to {temp_humidity_data_pathway}")
+        print('____________________________________________________\n')
+        print(f"Temperature and humidity data saved to {temp_humidity_data_pathway}\n")
 
         # Replace the original CSV file with the temporary one
         os.remove(data_pathway)
