@@ -22,7 +22,7 @@ def sendData(description, original_data, minutelyAv_data):
       body = f'{description} at {today_date2}' 
       yag.send(to=rec, subject=subject_, contents=body, attachments= [original_data, minutelyAv_data])
 
-      print("Email sent successfully!")
+      print(f'Email sent successfully to {rec}')
     
     except Exception as e:
       # Log the error
@@ -34,10 +34,7 @@ def sendData(description, original_data, minutelyAv_data):
 
 # Function to calculate the minutely average
 def calculate_minutely_average(dataframe):
-    print(dataframe.columns)
     dataframe['Date'] = pd.to_datetime(dataframe['Date'] + ' ' + dataframe['Time'])
-    print('_')
-    print(dataframe.columns)
     dataframe = dataframe.set_index('Date')
     dataframe = dataframe.drop(columns=['Time'])
     minutely_avg = dataframe.resample('1T').mean()
