@@ -161,5 +161,6 @@ finally:
     # Close the CSV file before exiting
     if 'csv_file' in locals():
         csv_file.close()
+    print (f'Data saved at {data_pathway}')
     print("CSV file closed. Program stopped.")
     sys.exit(0)  # Exit the program gracefully
