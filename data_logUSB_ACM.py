@@ -120,7 +120,9 @@ try:
                 print('Inlet temp (0) \t \t \t' + str(temperature))
                 writer.writerow({'Date': date, 'Time': time_, 'IO': "Inlet", 'Temp': temperature, 'Humidity': rh})
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
-                sleep(5)
+                THUM_01.write("CLOSE\r\n")
+                sleep(1)
+                #sleep(5)
             except Exception as e:
                 now = get_datetime()
                 print(f"Error reading THUM_00 at {now[1]} on {now[0]}: {e}")
@@ -138,7 +140,9 @@ try:
                 print('Outlet temp (1) \t \t' + str(temperature))
                 writer.writerow({'Date': date, 'Time': time_, 'IO': "Outlet", 'Temp': temperature, 'Humidity': rh})
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
-                sleep(5)
+                THUM_01.write("CLOSE\r\n")
+                sleep(1)
+                #sleep(5)
             except Exception as e:
                 now = get_datetime()
                 print(f"Error reading THUM_01 at {now[1]} on {now[0]}: {e}")
