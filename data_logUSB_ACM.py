@@ -192,8 +192,8 @@ except KeyboardInterrupt:
         print(f"Temperature and humidity data saved to {temp_humidity_data_pathway}\n")
 
         # Replace the original CSV file with the temporary one
-        os.remove(data_pathway)
-        os.rename(temp_humidity_data_pathway, data_pathway)
+        #os.remove(data_pathway)
+        #os.rename(temp_humidity_data_pathway, data_pathway)
 
     except Exception as e:
         print(f"Error during KeyboardInterrupt handling: {e}")
