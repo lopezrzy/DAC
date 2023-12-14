@@ -4,6 +4,8 @@ import pandas as pd
 def calculate_minutely_average(dataframe):
     print(dataframe.columns)
     dataframe['Date'] = pd.to_datetime(dataframe['Date'] + ' ' + dataframe['Time'])
+    print('_')
+    print(dataframe.columns)
     dataframe = dataframe.drop(columns=['Date', 'Time']).set_index('Date')
     minutely_avg = dataframe.resample('1T').mean()
     return minutely_avg
