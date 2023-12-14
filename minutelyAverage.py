@@ -1,43 +1,27 @@
-import csv
-from collections import defaultdict
-from datetime import datetime
+import pandas as pd
 
-# Function to calculate minute-wise averages
-def calculate_minute_averages(input_path):
-    data_by_minute = defaultdict(list)
+# Function to calculate the minutely average
+def calculate_minutely_average(dataframe):
+    dataframe['Date'] = pd.to_datetime(dataframe['Date'] + ' ' + dataframe['Time'])
+    dataframe = dataframe.drop(columns=['Date', 'Time']).set_index('Date')
+    minutely_avg = dataframe.resample('1T').mean()
+    return minutely_avg
 
-    with open(input_path, mode='r') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            try:
-                date_time_str = f"{row['Date']} {row['Time']}"
-                date_time = datetime.strptime(date_time_str, '%m/%d/%Y %H:%M:%S')
-                minute = date_time.strftime('%Y-%m-%d %H:%M')
+# Input path for the CSV file
+input_path = input("Enter the path to the input CSV file: ")
 
-                for key in row:
-                    if key != 'Date' and key != 'Time':
-                        if row[key]:
-                            data_by_minute[minute].append(float(row[key]))
-            except ValueError:
-                pass
+# Read the CSV file
+try:
+    df = pd.read_csv(input_path, parse_dates=[['Date', 'Time']])
+except FileNotFoundError:
+    print("File not found. Please provide a valid file path.")
+    exit(1)
 
-    minute_averages = {}
-    for minute, values in data_by_minute.items():
-        if values:
-            avg = sum(values) / len(values)
-            minute_averages[minute] = avg
-        else:
-            minute_averages[minute] = None
+# Calculate minutely averages
+minutely_avg_df = calculate_minutely_average(df)
 
-    print (minute_averages)
-    return minute_averages
+# Create a new CSV file with minutely averages
+output_path = input_path.replace('.csv', '_minutely.csv')
+minutely_avg_df.to_csv(output_path)
 
-
-
-if __name__ == "__main__":
-    input_path = input("Enter the pathway of the CSV file: ")
-    minute_averages = calculate_minute_averages(input_path)
-    
-    output_path = "minute_averages.csv"
-    #write_minute_averages_to_csv(output_path, minute_averages)
-    print(f"Minute-wise averages saved to {output_path}")
+print(f"Minutely averages saved to {output_path}")
