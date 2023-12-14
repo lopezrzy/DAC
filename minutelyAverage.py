@@ -29,21 +29,9 @@ def calculate_minute_averages(input_path):
         else:
             minute_averages[minute] = None
 
+    print minute_averages
     return minute_averages
 
-# Function to write results to a new CSV file
-def write_minute_averages_to_csv(output_path, minute_averages):
-    with open(output_path, mode='w', newline='') as csvfile:
-        fieldnames = ['Minute', 'Inlet Temp', 'Inlet Humidity', 'Outlet Temp', 'Outlet Humidity', 'Inlet CCO2', 'Outlet CCO2']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-
-        for minute, avg in minute_averages.items():
-            row = {'Minute': minute}
-            if avg:
-                for key, value in avg.items():
-                    row[key] = value
-            writer.writerow(row)
 
 
 if __name__ == "__main__":
@@ -51,5 +39,5 @@ if __name__ == "__main__":
     minute_averages = calculate_minute_averages(input_path)
     
     output_path = "minute_averages.csv"
-    write_minute_averages_to_csv(output_path, minute_averages)
+    #write_minute_averages_to_csv(output_path, minute_averages)
     print(f"Minute-wise averages saved to {output_path}")
