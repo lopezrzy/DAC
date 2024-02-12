@@ -15,7 +15,8 @@ def sendData(description, original_data, minutelyAv_data):
     
     try:
       # Compose the email
-      rec = ['zulma.lopezreyes@kaust.edu.sa','wesley.hopwood@kaust.edu.sa']
+      #rec = ['zulma.lopezreyes@kaust.edu.sa','wesley.hopwood@kaust.edu.sa']
+      rec = ['zulma.lopezreyes@kaust.edu.sa']
       today_date = datetime.datetime.now().strftime('%Y-%m-%d')
       today_date2 = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
       subject_ = f'DAC data: {today_date}'      
