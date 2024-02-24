@@ -192,32 +192,3 @@ finally:
     print (f'Data saved at {data_pathway}')
     print("CSV file closed. Program stopped.")
     sys.exit(0)  # Exit the program gracefully
-
-try:
-    with open(data_pathway, mode='a', newline='') as csv_file:
-        fieldnames = ['Date', 'Time', 'Inlet Temp', 'Inlet Humidity',  'Outlet Temp', 'Outlet Humidity','Inlet CCO2', 'Outlet CCO2']
-        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-
-        # Write the header only if the file is empty
-        if not file_exists:
-            writer.writeheader()
-            
-                    
-
-except KeyboardInterrupt:
-    # Close serial ports only if they are open
-    if carbo_43.serial.is_open:
-        carbo_43.serial.close()
-    if carbo_44.serial.is_open:
-        carbo_44.serial.close()
-    print("Ports Closed")
-
-
-finally:
-    # Close the CSV file before exiting
-    if 'csv_file' in locals():
-        csv_file.close()
-    print (f'Data saved at {data_pathway}')
-    print("CSV file closed. Program stopped.")
-    sys.exit(0)  # Exit the program gracefully
-
