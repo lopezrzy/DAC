@@ -174,8 +174,8 @@ try:
                 csv_file.flush()  # Flush the buffer to ensure data is written immediately
 
             except Exception as e:
-                print(f"Error: {e}")
-                # Handle errors accordingly
+                now = get_datetime()
+                print(f"Error reading THUM_01 at {now[1]} on {now[0]}: {e}")
 
 except KeyboardInterrupt:
     # Close serial ports only if they are open
